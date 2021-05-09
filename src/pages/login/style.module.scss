@@ -1,0 +1,115 @@
+@import '../../variables.scss';
+
+.container {
+  display: flex;
+  justify-content: center;
+  padding-top: 130px;
+
+  @media (max-width: $md2+px) {
+    padding-top: 30px;
+  }
+}
+
+.img {
+  height: 618px;
+  flex: 0 1 454px;
+
+  @media (max-width: $md2+px) {
+    display: none;
+  }
+
+  img {
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+.right {
+  flex: 0 1 350px;
+  margin-top: 30px;
+}
+
+.top {
+  padding: 10px 40px 20px;
+  background-color: #fff;
+  border: 1px solid #dbdbdb;
+  border-radius: 1px;
+  margin-bottom: 10px;
+
+  @media (max-width: $md2+px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+.error {
+  text-align: center;
+  color: $red;
+  margin-bottom: 15px;
+}
+
+.header {
+  margin: 22px auto 20px;
+  text-align: center;
+}
+
+.input {
+  margin-bottom: 12px;
+}
+
+.btn {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+.or {
+  text-align: center;
+  color: $text2;
+  position: relative;
+  margin-bottom: 20px;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    height: 1px;
+    width: 40%;
+    background-color: $text2;
+    top: 50%;
+    border: none;
+  }
+
+  &::after {
+    right: 0;
+  }
+
+  &::before {
+    left: 0;
+  }
+}
+
+.other {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.google {
+  color: #7797bf;
+  font-size: 14px;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.forget {
+  color: #8ca7c9;
+  font-size: 12px;
+}
+
+.register {
+  padding: 20px 0;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid #dbdbdb;
+  border-radius: 1px;
+}

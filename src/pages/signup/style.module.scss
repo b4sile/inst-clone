@@ -1,0 +1,47 @@
+@import '../../variables.scss';
+
+.container {
+  composes: container from '../login/style.module.scss';
+}
+
+.right {
+  composes: right from '../login/style.module.scss';
+}
+
+.top {
+  composes: top from '../login/style.module.scss';
+}
+
+.error {
+  composes: error from '../login/style.module.scss';
+}
+
+.header {
+  composes: header from '../login/style.module.scss';
+}
+
+.input {
+  composes: input from '../login/style.module.scss';
+}
+
+.btn {
+  composes: btn from '../login/style.module.scss';
+}
+.or {
+  composes: or from '../login/style.module.scss';
+}
+
+.other {
+  composes: other from '../login/style.module.scss';
+}
+
+.register {
+  composes: register from '../login/style.module.scss';
+}
+
+.text {
+  text-align: center;
+  font-weight: 500;
+  color: $text2;
+  margin-bottom: 15px;
+}

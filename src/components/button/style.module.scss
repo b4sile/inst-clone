@@ -1,0 +1,33 @@
+@import '../../variables.scss';
+
+.button {
+  height: 30px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $blue;
+  text-transform: none;
+  border: none;
+  outline: none;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 0 10px;
+  font-size: 14px;
+  line-height: 18/14 * 100%;
+  transition: background-color 0.1s ease;
+  font-weight: 500;
+
+  &:active {
+    background-color: #4cb4f8;
+  }
+}
+
+.button_disabled {
+  pointer-events: none;
+  background-color: #b2dffc;
+}
+
+.fullWidth {
+  width: 100%;
+}

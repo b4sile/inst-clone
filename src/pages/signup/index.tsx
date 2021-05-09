@@ -5,51 +5,79 @@ import { ROUTES } from '../../constants/routes';
 import { FirebaseContext, FirebaseAuthError } from '../../context/firebase';
 import s from './style.module.scss';
 
-const Login = () => {
+const SignUp = () => {
   const history = useHistory();
   const { firebase } = React.useContext(FirebaseContext);
   const [emailAddress, setEmailAddress] = React.useState('');
+  const [fullName, setFullName] = React.useState('');
+  const [userName, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
 
-  const isInvalid = password === '' || emailAddress === '';
+  const isInvalid =
+    password === '' ||
+    emailAddress === '' ||
+    fullName === '' ||
+    userName === '';
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
-      history.push(ROUTES.DASHBOARD);
-    } catch (err) {
-      if (err instanceof FirebaseAuthError) {
-        setError(err.message);
-      }
-      setEmailAddress('');
-      setPassword('');
-    }
+    // try {
+    //   await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
+    //   history.push(ROUTES.DASHBOARD);
+    // } catch (err) {
+    //   if (err instanceof FirebaseAuthError) {
+    //     setError(err.message);
+    //   }
+    //   setEmailAddress('');
+    //   setPassword('');
+    // }
   };
 
   React.useEffect(() => {
-    document.title = 'Login';
+    document.title = 'SignUp';
   }, []);
 
   return (
     <div className={s.container}>
-      <div className={s.img}>
-        <img src="images/iphone-with-profile.jpg" alt="LoginImg" />
-      </div>
       <div className={s.right}>
         <div className={s.top}>
           <h1 className={s.header}>
             <img src="images/logo.png" alt="Logo" />
           </h1>
+          <p className={s.text}>
+            Sign up to see photos and videos from your friends.{' '}
+          </p>
+          <div className={s.or}>OR</div>
+          <Link to="">
+            <Button className={s.btn} fullWidth>
+              Login with google
+            </Button>
+          </Link>
           {error && <p className={s.error}>{error}</p>}
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleSignUp}>
             <InputText
               placeholder="email"
               onChange={(e) => setEmailAddress(e.target.value)}
               value={emailAddress}
               className={s.input}
               id="email"
+              autoComplete="on"
+            />
+            <InputText
+              placeholder="fullname"
+              onChange={(e) => setFullName(e.target.value)}
+              value={fullName}
+              className={s.input}
+              id="fullname"
+              autoComplete="on"
+            />
+            <InputText
+              placeholder="username"
+              onChange={(e) => setUserName(e.target.value)}
+              value={userName}
+              className={s.input}
+              id="username"
               autoComplete="on"
             />
             <InputText
@@ -65,22 +93,14 @@ const Login = () => {
               fullWidth
               className={s.btn}
             >
-              Login
+              Sign Up
             </Button>
-            <div className={s.or}>OR</div>
-            <div className={s.other}>
-              <Link to="/" className={s.google}>
-                Login with google
-              </Link>
-              <Link to="/" className={s.forget}>
-                Forget password?
-              </Link>
-            </div>
+            <div className={s.other}></div>
           </form>
         </div>
         <div className={s.register}>
           <p>
-            Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign up</Link>
+            Have an account? <Link to={ROUTES.LOGIN}>Log In</Link>
           </p>
         </div>
       </div>
@@ -88,4 +108,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

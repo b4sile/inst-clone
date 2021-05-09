@@ -15,6 +15,9 @@ const config = {
 export const firebase = Firebase.initializeApp(config);
 export const { FieldValue } = Firebase.firestore;
 
+export class FirebaseAuthError implements Firebase.auth.Error {
+  constructor(readonly code: string, readonly message: string) {}
+}
 export interface FirebaseContextInterface {
   firebase: Firebase.app.App;
   FieldValue: typeof FieldValue;
