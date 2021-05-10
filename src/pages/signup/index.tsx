@@ -2,7 +2,8 @@ import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Button, InputText } from '../../components';
 import { ROUTES } from '../../constants/routes';
-import { FirebaseContext, FirebaseAuthError } from '../../context/firebase';
+import { FirebaseContext } from '../../context/firebase';
+import { doesUsernameExist } from '../../services/firebase';
 import s from './style.module.scss';
 
 const SignUp = () => {
@@ -10,7 +11,7 @@ const SignUp = () => {
   const { firebase } = React.useContext(FirebaseContext);
   const [emailAddress, setEmailAddress] = React.useState('');
   const [fullName, setFullName] = React.useState('');
-  const [userName, setUserName] = React.useState('');
+  const [username, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
 
@@ -18,20 +19,36 @@ const SignUp = () => {
     password === '' ||
     emailAddress === '' ||
     fullName === '' ||
-    userName === '';
+    username === '';
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // try {
-    //   await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
-    //   history.push(ROUTES.DASHBOARD);
-    // } catch (err) {
-    //   if (err instanceof FirebaseAuthError) {
-    //     setError(err.message);
-    //   }
-    //   setEmailAddress('');
-    //   setPassword('');
-    // }
+    if (isInvalid) return;
+    try {
+      const userNameExists = await doesUsernameExist(username);
+      if (userNameExists) {
+        throw Error('Username is already taken');
+      }
+      const newUser = await firebase
+        .auth()
+        .createUserWithEmailAndPassword(emailAddress, password);
+      await newUser.user?.updateProfile({ displayName: username });
+      await firebase.firestore().collection('users').add({
+        userId: newUser.user?.uid,
+        username: username.toLowerCase(),
+        fullName,
+        emailAddress: emailAddress.toLowerCase(),
+        following: [],
+        dateCreated: Date.now(),
+      });
+      history.push(ROUTES.DASHBOARD);
+    } catch (err) {
+      setError(err.message);
+      setEmailAddress('');
+      setPassword('');
+      setFullName('');
+      setUserName('');
+    }
   };
 
   React.useEffect(() => {
@@ -49,11 +66,9 @@ const SignUp = () => {
             Sign up to see photos and videos from your friends.{' '}
           </p>
           <div className={s.or}>OR</div>
-          <Link to="">
-            <Button className={s.btn} fullWidth>
-              Login with google
-            </Button>
-          </Link>
+          <Button className={s.btn} fullWidth>
+            Login with google
+          </Button>
           {error && <p className={s.error}>{error}</p>}
           <form onSubmit={handleSignUp}>
             <InputText
@@ -75,7 +90,7 @@ const SignUp = () => {
             <InputText
               placeholder="username"
               onChange={(e) => setUserName(e.target.value)}
-              value={userName}
+              value={username}
               className={s.input}
               id="username"
               autoComplete="on"

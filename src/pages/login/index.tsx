@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Button, InputText } from '../../components';
 import { ROUTES } from '../../constants/routes';
-import { FirebaseContext, FirebaseAuthError } from '../../context/firebase';
+import { FirebaseContext } from '../../context/firebase';
 import s from './style.module.scss';
 
 const Login = () => {
@@ -16,13 +16,12 @@ const Login = () => {
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (isInvalid) return;
     try {
       await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
       history.push(ROUTES.DASHBOARD);
     } catch (err) {
-      if (err instanceof FirebaseAuthError) {
-        setError(err.message);
-      }
+      setError(err.message);
       setEmailAddress('');
       setPassword('');
     }
