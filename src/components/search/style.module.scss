@@ -1,0 +1,35 @@
+@import '../../variables.scss';
+
+.container {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  height: 100%;
+}
+
+.input {
+  width: 100%;
+  height: 28px;
+  border: 1px solid $border;
+  border-radius: 3px;
+  padding: 3px 10px 3px 28px;
+  background-color: $bg;
+  outline: none;
+
+  &::placeholder {
+    font-size: 16px;
+    color: $text2;
+  }
+}
+
+.search__icon {
+  color: $text2;
+  left: 8px;
+  top: 50%;
+  transform: translate(0, -50%);
+  position: absolute;
+  path {
+    width: 10px;
+    height: 10px;
+  }
+}

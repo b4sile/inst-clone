@@ -1,0 +1,45 @@
+.container {
+  visibility: hidden;
+  opacity: 0;
+  width: 375px;
+  height: 362px;
+  position: absolute;
+  top: 53px;
+  left: -80px;
+  // overflow-x: hidden;
+  // overflow-y: auto;
+  border-radius: 6px;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.098) 0px 0px 5px 1px;
+  transition: all 0.2s ease;
+  z-index: 100;
+
+  &::before,
+  &::after {
+    background-color: #fff;
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 50%;
+  }
+
+  &::before {
+    box-shadow: rgba(0, 0, 0, 0.098) 0px 0px 5px 1px;
+    transform: translate(-50%, -50%) rotate(45deg);
+    z-index: -10;
+    width: 15px;
+    height: 15px;
+  }
+
+  &::after {
+    transform: translate(-50%, 0);
+    width: 50%;
+    height: 20px;
+    z-index: -1;
+  }
+}
+
+.container_active {
+  visibility: visible;
+  opacity: 1;
+}

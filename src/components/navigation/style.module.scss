@@ -1,0 +1,46 @@
+@import '../../variables.scss';
+.link {
+  color: #000;
+  margin-left: 22px;
+
+  svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  &:active {
+    color: #000;
+    opacity: 0.5;
+  }
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.sublist {
+  width: 230px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+
+  &::after,
+  &::before {
+    left: 69%;
+  }
+}
+
+.sublist__link {
+  font-size: 14px;
+  line-height: 18px;
+  color: $text1;
+  width: 100%;
+  background: none;
+  padding: 8px 16px;
+
+  &:hover {
+    background-color: $bg;
+  }
+}
