@@ -23,6 +23,7 @@
 }
 
 .search__icon {
+  pointer-events: none;
   color: $text2;
   left: 8px;
   top: 50%;

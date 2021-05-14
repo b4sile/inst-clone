@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header } from '../../components';
+import { Button, Header } from '../../components';
 // import { useAppDispatch, useAppSelector } from '../../hooks';
 // import { selectUser } from '../../redux/slices/userSlice';
 // import s from './style.module.scss';
@@ -14,7 +14,14 @@ const Dashboard = () => {
   return (
     <div>
       <Header />
-      <div>home</div>
+      <div>
+        <Button variant="outlined">home</Button>
+        <Button>home</Button>
+        <Button color="secondary">home</Button>
+        <Button variant="outlined" color="secondary">
+          home
+        </Button>
+      </div>
     </div>
   );
 };

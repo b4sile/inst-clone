@@ -9,8 +9,6 @@ import { ROUTES } from './constants/routes';
 import s from './App.module.scss';
 import { useAuthListener } from './hooks/useAuthListener';
 import { Loading } from './pages/loading';
-import { useAppSelector } from './hooks';
-import { selectUser } from './redux/slices/userSlice';
 
 const Login = React.lazy(() => import('./pages/login'));
 const SignUp = React.lazy(() => import('./pages/signup'));
@@ -19,7 +17,6 @@ const Dashboard = React.lazy(() => import('./pages/dashboard'));
 
 function App() {
   const isLoading = useAuthListener();
-  const user = useAppSelector(selectUser);
 
   return (
     <div className={s.container}>
@@ -28,15 +25,7 @@ function App() {
           <Switch>
             <Route
               path={`${ROUTES.DASHBOARD}`}
-              render={() =>
-                isLoading ? (
-                  <Loading />
-                ) : user ? (
-                  <Dashboard />
-                ) : (
-                  <Redirect to={`${ROUTES.LOGIN}`} />
-                )
-              }
+              render={() => (isLoading ? <Loading /> : <Dashboard />)}
               exact
             />
             <Route path={`${ROUTES.LOGIN}`} component={Login} exact />

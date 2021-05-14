@@ -5,27 +5,64 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  background-color: $blue;
   text-transform: none;
   border: none;
-  outline: none;
-  color: #fff;
   border-radius: 4px;
   cursor: pointer;
   padding: 0 10px;
   font-size: 14px;
   line-height: 18/14 * 100%;
-  transition: background-color 0.1s ease;
+  transition: all 0.1s ease;
   font-weight: 500;
+}
 
+.button_contained {
+  background-color: $blue;
+  color: #fff;
   &:active {
     background-color: #4cb4f8;
   }
+
+  &.button_disabled {
+    pointer-events: none;
+    background-color: #b2dffc;
+  }
+
+  &.secondary {
+    background-color: #fff;
+    color: $text1;
+    border: 1px solid $border;
+
+    &:active {
+      opacity: 0.5;
+    }
+    &.button_disabled {
+      opacity: 0.5;
+    }
+  }
 }
 
-.button_disabled {
-  pointer-events: none;
-  background-color: #b2dffc;
+.button_outlined {
+  background-color: #fff;
+  color: $blue;
+  &:active {
+    opacity: 0.5;
+  }
+  &.button_disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  &.secondary {
+    background-color: #fff;
+    color: $text1;
+
+    &:hover {
+      background-color: $bg;
+    }
+    &:active {
+      opacity: 0.5;
+    }
+  }
 }
 
 .fullWidth {
