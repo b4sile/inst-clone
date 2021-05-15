@@ -32,13 +32,13 @@ const SignUp = () => {
       const newUser = await firebase
         .auth()
         .createUserWithEmailAndPassword(emailAddress, password);
-      await newUser.user?.updateProfile({ displayName: username });
       await firebase.firestore().collection('users').add({
         userId: newUser.user?.uid,
         username: username.toLowerCase(),
         fullName,
         emailAddress: emailAddress.toLowerCase(),
         following: [],
+        followers: [],
         dateCreated: Date.now(),
       });
       history.push(ROUTES.DASHBOARD);

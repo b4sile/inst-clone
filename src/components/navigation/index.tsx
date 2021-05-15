@@ -5,8 +5,7 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Button } from '..';
 import { ROUTES } from '../../constants/routes';
 import { FirebaseContext } from '../../context/firebase';
-import { useAppSelector } from '../../hooks';
-import { selectUser } from '../../redux/slices/userSlice';
+import { useUser } from '../../hooks/useUser';
 import { Menu } from '../menu';
 import s from './style.module.scss';
 
@@ -16,7 +15,7 @@ export const Navigation = () => {
   const { pathname } = useLocation();
   const { firebase } = React.useContext(FirebaseContext);
   const history = useHistory();
-  const user = useAppSelector(selectUser);
+  const { user, isAuth } = useUser();
 
   const onSignOut = async () => {
     try {
@@ -40,7 +39,7 @@ export const Navigation = () => {
   return (
     <div className={s.container}>
       <ul className={s.list}>
-        {user ? (
+        {isAuth ? (
           <>
             <li>
               <Link className={s.link} to={`${ROUTES.DASHBOARD}`}>
@@ -55,9 +54,9 @@ export const Navigation = () => {
               <Link
                 onClick={handleOpenUserMenu}
                 className={s.link}
-                to={`/p/${user?.displayName}`}
+                to={`/${user?.username}`}
               >
-                {pathname === `/p/${user?.displayName}` || anchorElem ? (
+                {pathname === `/${user?.username}` || anchorElem ? (
                   <FaUserCircle />
                 ) : (
                   <FaRegUserCircle />
@@ -70,6 +69,18 @@ export const Navigation = () => {
                 className={s.sublist}
               >
                 <ul>
+                  <li>
+                    <Link to={`/${user?.username}`}>
+                      <Button
+                        onClick={onClose}
+                        variant="outlined"
+                        color="secondary"
+                        fullWidth
+                      >
+                        Profile
+                      </Button>
+                    </Link>
+                  </li>
                   <li>
                     <Button
                       variant="outlined"

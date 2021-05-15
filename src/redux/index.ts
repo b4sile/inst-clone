@@ -1,16 +1,8 @@
-import {
-  Action,
-  configureStore,
-  getDefaultMiddleware,
-  ThunkAction,
-} from '@reduxjs/toolkit';
+import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import userReducer from './slices/userSlice';
 
 export const store = configureStore({
   reducer: { user: userReducer },
-  middleware: getDefaultMiddleware({
-    serializableCheck: false,
-  }),
 });
 
 export type AppDispatch = typeof store.dispatch;

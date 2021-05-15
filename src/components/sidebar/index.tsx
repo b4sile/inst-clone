@@ -1,9 +1,12 @@
 import React from 'react';
+import cn from 'classnames';
 
-export const Sidebar = () => {
+type SidebarProps = { className?: string };
+
+export const Sidebar = ({ className }: SidebarProps) => {
   return (
-    <div>
+    <aside className={cn(className)}>
       <div>sidebar</div>
-    </div>
+    </aside>
   );
 };

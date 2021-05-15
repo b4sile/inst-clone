@@ -1,23 +1,28 @@
+import {
+  selectIsCheckingAuth,
+  setIsCheckingAuth,
+} from './../redux/slices/userSlice';
 import React from 'react';
 import { FirebaseContext } from '../context/firebase';
 import { useAppDispatch, useAppSelector } from '.';
-import { selectUserIsLoading, setUser } from '../redux/slices/userSlice';
+import { setUser } from '../redux/slices/userSlice';
 
 export const useAuthListener = () => {
-  const isLoading = useAppSelector(selectUserIsLoading);
+  const isCheckingAuth = useAppSelector(selectIsCheckingAuth);
   const dispatch = useAppDispatch();
   const { firebase } = React.useContext(FirebaseContext);
 
   React.useEffect(() => {
     const listener = firebase.auth().onAuthStateChanged((authUser) => {
       if (authUser) {
-        dispatch(setUser({ user: authUser, isLoading: false }));
+        dispatch(setIsCheckingAuth(false));
       } else {
-        dispatch(setUser({ user: null, isLoading: false }));
+        dispatch(setIsCheckingAuth(false));
+        dispatch(setUser(null));
       }
     });
     return () => listener();
   }, [firebase, dispatch]);
 
-  return isLoading;
+  return isCheckingAuth;
 };

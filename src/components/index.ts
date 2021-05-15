@@ -5,3 +5,6 @@ export { Sidebar } from './sidebar';
 export { Timeline } from './timeline';
 export { Search } from './search';
 export { Navigation } from './navigation';
+export { Profile } from './profile';
+export { Home } from './home';
+export { Avatar } from './avatar';

@@ -1,28 +1,23 @@
 import React from 'react';
-import { Button, Header } from '../../components';
-// import { useAppDispatch, useAppSelector } from '../../hooks';
-// import { selectUser } from '../../redux/slices/userSlice';
-// import s from './style.module.scss';
+import { Route, Switch } from 'react-router-dom';
+import { Header, Home, Profile } from '../../components';
+import { ROUTES } from '../../constants/routes';
 
 const Dashboard = () => {
-  // const user = useAppSelector(selectUser);
-  // const dispatch = useAppDispatch();
   React.useEffect(() => {
     document.title = 'Instagram';
   }, []);
 
   return (
-    <div>
+    <>
       <Header />
-      <div>
-        <Button variant="outlined">home</Button>
-        <Button>home</Button>
-        <Button color="secondary">home</Button>
-        <Button variant="outlined" color="secondary">
-          home
-        </Button>
-      </div>
-    </div>
+      <main>
+        <Switch>
+          <Route exact path={`${ROUTES.DASHBOARD}`} component={Home} />
+          <Route exact path={`${ROUTES.PROFILE}`} component={Profile} />
+        </Switch>
+      </main>
+    </>
   );
 };
 
