@@ -1,0 +1,36 @@
+@import '../../variables.scss';
+.container {
+  display: inline-flex;
+  align-items: center;
+}
+
+.username {
+  color: $text1;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 600;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.fullName {
+  color: $text2;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 400;
+}
+
+.tag {
+  color: $text2;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 400;
+}
+
+.middle {
+  margin-left: 12px;
+  display: flex;
+  flex-direction: column;
+}

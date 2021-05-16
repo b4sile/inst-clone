@@ -21,7 +21,7 @@ interface UserState {
 const initialState: UserState = {
   user: null,
   isCheckingAuth: true,
-  isLoading: false,
+  isLoading: true,
 };
 
 const { actions, reducer } = createSlice({

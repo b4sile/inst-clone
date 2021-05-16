@@ -2,7 +2,7 @@ import React from 'react';
 import { Sidebar, Timeline } from '..';
 import s from './style.module.scss';
 
-export const Home = () => {
+const Home = () => {
   return (
     <div className={s.container}>
       <Timeline className={s.left} />
@@ -10,3 +10,5 @@ export const Home = () => {
     </div>
   );
 };
+
+export default Home;

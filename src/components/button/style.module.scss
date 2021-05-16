@@ -43,7 +43,7 @@
 }
 
 .button_outlined {
-  background-color: #fff;
+  background-color: $bg;
   color: $blue;
   &:active {
     opacity: 0.5;
@@ -53,11 +53,11 @@
     opacity: 0.5;
   }
   &.secondary {
-    background-color: #fff;
+    background-color: $bg;
     color: $text1;
 
     &:hover {
-      background-color: $bg;
+      background-color: #fff;
     }
     &:active {
       opacity: 0.5;

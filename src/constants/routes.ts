@@ -4,4 +4,5 @@ export enum ROUTES {
   SIGN_UP = '/signup',
   PROFILE = '/:username',
   NOT_FOUND = '/not-found',
+  EXPLORE_SUGGESTIONS = '/explore/suggestions',
 }

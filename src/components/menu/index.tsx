@@ -21,7 +21,7 @@ export const Menu = ({
 }: MenuProps) => {
   const menuRef = React.useRef<HTMLDivElement>(null);
   const handleOutsideClick = (e: MouseEvent) => {
-    if (!e.composedPath().includes(menuRef.current!) && visible) {
+    if (visible && !menuRef.current?.contains(e.target as Node)) {
       if (!isInputMenu) onClose();
       else {
         if (!anchorElem?.contains(e.target as Node)) onClose();

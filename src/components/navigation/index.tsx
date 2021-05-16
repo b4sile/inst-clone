@@ -29,7 +29,6 @@ export const Navigation = () => {
   const handleOpenUserMenu = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     if (!anchorElem) setAnchorElem(e.currentTarget);
-    else setAnchorElem(null);
   };
 
   const onClose = () => {
