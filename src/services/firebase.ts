@@ -25,3 +25,20 @@ export const getUserById = async (
       ) as UserDataInterface)
     : null;
 };
+
+export const getSuggestions = async (
+  userId: string,
+  count: number,
+  following: string[]
+): Promise<UserDataInterface[]> => {
+  const result = await firebase
+    .firestore()
+    .collection('users')
+    .where('userId', 'not-in', [...following, userId])
+    .limit(count)
+    .get();
+  return result.docs.map((item) => ({
+    ...item.data(),
+    docId: item.id,
+  })) as UserDataInterface[];
+};

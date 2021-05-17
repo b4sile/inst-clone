@@ -11,7 +11,7 @@ const NotFound = React.lazy(() => import('./pages/notFound'));
 const Dashboard = React.lazy(() => import('./pages/dashboard'));
 
 function App() {
-  const isCheckingAuth = useAuthListener();
+  const isLoading = useAuthListener();
 
   return (
     <div className={s.container}>
@@ -23,11 +23,9 @@ function App() {
             <Route
               exact
               path={[`${ROUTES.DASHBOARD}`, `${ROUTES.PROFILE}`]}
-              render={() => (isCheckingAuth ? <Loading /> : <Dashboard />)}
+              component={isLoading ? Loading : Dashboard}
             />
-            <Route
-              render={() => (isCheckingAuth ? <Loading /> : <NotFound />)}
-            />
+            <Route render={() => (isLoading ? <Loading /> : <NotFound />)} />
           </Switch>
         </Suspense>
       </Router>

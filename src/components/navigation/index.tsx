@@ -1,11 +1,12 @@
 import React from 'react';
 import { AiFillHome, AiOutlineHome } from 'react-icons/ai';
 import { FaRegUserCircle, FaUserCircle } from 'react-icons/fa';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Button } from '..';
 import { ROUTES } from '../../constants/routes';
 import { FirebaseContext } from '../../context/firebase';
-import { useUser } from '../../hooks/useUser';
+import { useAppSelector } from '../../hooks';
+import { selectUser } from '../../redux/slices/userSlice';
 import { Menu } from '../menu';
 import s from './style.module.scss';
 
@@ -14,13 +15,11 @@ export const Navigation = () => {
     React.useState<HTMLAnchorElement | null>(null);
   const { pathname } = useLocation();
   const { firebase } = React.useContext(FirebaseContext);
-  const history = useHistory();
-  const { user, isAuth } = useUser();
+  const user = useAppSelector(selectUser);
 
   const onSignOut = async () => {
     try {
       await firebase.auth().signOut();
-      history.push(ROUTES.LOGIN);
     } catch (err) {
       console.log(err);
     }
@@ -38,7 +37,7 @@ export const Navigation = () => {
   return (
     <div className={s.container}>
       <ul className={s.list}>
-        {isAuth ? (
+        {user ? (
           <>
             <li>
               <Link className={s.link} to={`${ROUTES.DASHBOARD}`}>
@@ -53,9 +52,9 @@ export const Navigation = () => {
               <Link
                 onClick={handleOpenUserMenu}
                 className={s.link}
-                to={`/${user?.username}`}
+                to={`/${user.username}`}
               >
-                {pathname === `/${user?.username}` || anchorElem ? (
+                {pathname === `/${user.username}` || anchorElem ? (
                   <FaUserCircle />
                 ) : (
                   <FaRegUserCircle />
@@ -69,7 +68,7 @@ export const Navigation = () => {
               >
                 <ul>
                   <li>
-                    <Link to={`/${user?.username}`}>
+                    <Link to={`/${user.username}`}>
                       <Button
                         onClick={onClose}
                         variant="outlined"

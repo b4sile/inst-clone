@@ -3,7 +3,6 @@ import cn from 'classnames';
 import { Button, Suggestions, User } from '..';
 import { selectUser } from '../../redux/slices/userSlice';
 import { useAppSelector } from '../../hooks';
-import Skeleton from 'react-loading-skeleton';
 import s from './style.module.scss';
 import { ROUTES } from '../../constants/routes';
 import { Link } from 'react-router-dom';
@@ -15,14 +14,8 @@ export const Sidebar = ({ className }: SidebarProps) => {
 
   return (
     <aside className={cn(className)}>
-      {user ? (
-        <User
-          username={user?.username}
-          fullName={user?.fullName}
-          variant="big"
-        />
-      ) : (
-        <Skeleton height={56} />
+      {user && (
+        <User username={user.username} fullName={user.fullName} variant="big" />
       )}
       <div className={s.sugest}>
         <p>Suggestions For You</p>
@@ -32,7 +25,7 @@ export const Sidebar = ({ className }: SidebarProps) => {
           </Button>
         </Link>
       </div>
-      <Suggestions />
+      <Suggestions count={5} />
     </aside>
   );
 };

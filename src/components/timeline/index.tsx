@@ -5,8 +5,8 @@ type TimeLineProps = { className?: string };
 
 export const Timeline = ({ className }: TimeLineProps) => {
   return (
-    <section className={cn(className)}>
+    <div className={cn(className)}>
       <div>timeline</div>
-    </section>
+    </div>
   );
 };

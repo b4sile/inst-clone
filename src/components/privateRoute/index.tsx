@@ -1,13 +1,13 @@
 import React from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 import { ROUTES } from '../../constants/routes';
-import { FirebaseContext } from '../../context/firebase';
+import { useAppSelector } from '../../hooks';
+import { selectUser } from '../../redux/slices/userSlice';
 
 interface PrivateRouteProps extends RouteProps {}
 
 export const PrivateRoute = ({ ...rest }: PrivateRouteProps) => {
-  const { firebase } = React.useContext(FirebaseContext);
-  const user = firebase.auth().currentUser;
+  const user = useAppSelector(selectUser);
 
   if (user) {
     return <Route {...rest} />;

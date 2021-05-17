@@ -27,7 +27,7 @@ export const User = ({
         <Avatar url={`images/avatars/${username}.jpg`} size={avatarSize} />
       </Link>
       <div className={s.middle}>
-        <Link to={`/${username}`} className={s.username}>
+        <Link to={`/${username}`} className={cn(s.username, s.link)}>
           {username}
         </Link>
         {fullName && <div className={s.fullName}>{fullName}</div>}
