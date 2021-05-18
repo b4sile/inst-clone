@@ -1,7 +1,10 @@
 import React from 'react';
 import cn from 'classnames';
 import { Button, Suggestions, User } from '..';
-import { selectUser } from '../../redux/slices/userSlice';
+import {
+  selectUserFullName,
+  selectUserUsername,
+} from '../../redux/slices/userSlice';
 import { useAppSelector } from '../../hooks';
 import s from './style.module.scss';
 import { ROUTES } from '../../constants/routes';
@@ -9,13 +12,14 @@ import { Link } from 'react-router-dom';
 
 type SidebarProps = { className?: string };
 
-export const Sidebar = ({ className }: SidebarProps) => {
-  const user = useAppSelector(selectUser);
+export const Sidebar = React.memo(({ className }: SidebarProps) => {
+  const username = useAppSelector(selectUserUsername);
+  const fullName = useAppSelector(selectUserFullName);
 
   return (
     <aside className={cn(className)}>
-      {user && (
-        <User username={user.username} fullName={user.fullName} variant="big" />
+      {username && fullName && (
+        <User username={username} fullName={fullName} variant="big" />
       )}
       <div className={s.sugest}>
         <p>Suggestions For You</p>
@@ -28,4 +32,4 @@ export const Sidebar = ({ className }: SidebarProps) => {
       <Suggestions count={5} />
     </aside>
   );
-};
+});

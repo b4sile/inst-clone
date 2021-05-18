@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '..';
-import { fetchUserById } from '../thunks';
+import { fetchUpdateFollowing, fetchUserById } from '../thunks';
 
 export interface UserDataInterface {
   docId: string;
@@ -15,11 +15,13 @@ export interface UserDataInterface {
 interface UserState {
   user: UserDataInterface | null;
   isLoading: boolean;
+  followingIds: string[];
 }
 
 const initialState: UserState = {
   user: null,
   isLoading: true,
+  followingIds: [],
 };
 
 const { actions, reducer } = createSlice({
@@ -45,10 +47,47 @@ const { actions, reducer } = createSlice({
       state.isLoading = false;
       console.log(action.error);
     });
+    builder.addCase(fetchUpdateFollowing.pending, (state, { meta }) => {
+      state.followingIds.push(meta.arg.profileId);
+    });
+    builder.addCase(fetchUpdateFollowing.fulfilled, (state, { meta }) => {
+      const {
+        arg: { profileId, method },
+      } = meta;
+      if (method === 'add') {
+        state.user?.following.push(profileId);
+      } else {
+        if (state.user) {
+          state.user.following = state.user?.following.filter(
+            (id) => id !== profileId
+          );
+        }
+      }
+      state.followingIds = state.followingIds.filter((id) => id !== profileId);
+    });
+    builder.addCase(fetchUpdateFollowing.rejected, (state, { error, meta }) => {
+      state.followingIds = state.followingIds.filter(
+        (id) => id !== meta.arg.profileId
+      );
+      console.log(error);
+    });
   },
 });
 
 export const selectUser = ({ user }: RootState) => user.user;
+export const selectUserUsername = ({ user: { user } }: RootState) =>
+  user && user.username;
+export const selectUserFullName = ({ user: { user } }: RootState) =>
+  user && user.fullName;
+export const selectUserFollowind = ({ user: { user } }: RootState) =>
+  user && user.following;
+export const selectUserFollowers = ({ user: { user } }: RootState) =>
+  user && user.followers;
+export const selectUserId = ({ user: { user } }: RootState) =>
+  user && user.userId;
+export const selectUserDocId = ({ user: { user } }: RootState) =>
+  user && user.docId;
+export const selectFollowingIds = ({ user }: RootState) => user.followingIds;
 export const selectIsLoading = ({ user }: RootState) => user.isLoading;
 
 export const { setUser, setIsLoading } = actions;

@@ -42,3 +42,37 @@ export const getSuggestions = async (
     docId: item.id,
   })) as UserDataInterface[];
 };
+
+export const updateUserFollowing = async (
+  docId: string,
+  profileId: string,
+  method: 'add' | 'remove'
+) => {
+  return firebase
+    .firestore()
+    .collection('users')
+    .doc(docId)
+    .update({
+      following:
+        method === 'add'
+          ? FieldValue.arrayUnion(profileId)
+          : FieldValue.arrayRemove(profileId),
+    });
+};
+
+export const updateUserFollowers = async (
+  docId: string,
+  profileId: string,
+  method: 'add' | 'remove'
+) => {
+  return firebase
+    .firestore()
+    .collection('users')
+    .doc(docId)
+    .update({
+      followers:
+        method === 'add'
+          ? FieldValue.arrayUnion(profileId)
+          : FieldValue.arrayRemove(profileId),
+    });
+};

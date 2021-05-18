@@ -1,9 +1,11 @@
 import React from 'react';
 import s from './style.module.scss';
 import cn from 'classnames';
+import { Spinner } from '../spinner';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
+  isLoading?: boolean;
   fullWidth?: boolean;
   color?: 'primary' | 'secondary';
   variant?: 'contained' | 'outlined';
@@ -16,6 +18,7 @@ export const Button = ({
   fullWidth,
   variant = 'contained',
   color = 'primary',
+  isLoading = false,
   ...restProps
 }: ButtonProps) => {
   return (
@@ -29,7 +32,8 @@ export const Button = ({
       })}
       {...restProps}
     >
-      {children}
+      <span className={cn({ [s.isLoading]: isLoading })}>{children}</span>
+      {isLoading && <Spinner className={s.spinner} variant={variant} />}
     </button>
   );
 };

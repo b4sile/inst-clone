@@ -14,6 +14,7 @@ const SignUp = () => {
   const [username, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
+  const [isSignUping, setIsSignUping] = React.useState(false);
 
   const isInvalid =
     password === '' ||
@@ -24,6 +25,7 @@ const SignUp = () => {
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isInvalid) return;
+    setIsSignUping(true);
     try {
       const userNameExists = await doesUsernameExist(username);
       if (userNameExists) {
@@ -41,8 +43,10 @@ const SignUp = () => {
         followers: [],
         dateCreated: Date.now(),
       });
+      setIsSignUping(false);
       history.push(ROUTES.DASHBOARD);
     } catch (err) {
+      setIsSignUping(false);
       setError(err.message);
       setEmailAddress('');
       setPassword('');
@@ -104,11 +108,12 @@ const SignUp = () => {
             />
             <Button
               type="submit"
-              disabled={isInvalid}
+              disabled={isInvalid || isSignUping}
               fullWidth
               className={s.btn}
+              isLoading={isSignUping}
             >
-              Sign Up
+              Sign up
             </Button>
             <div className={s.other}></div>
           </form>

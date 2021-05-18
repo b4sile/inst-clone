@@ -22,7 +22,7 @@ const { actions, reducer } = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchSuggestions.pending, (state) => {
+    builder.addCase(fetchSuggestions.pending, (state, { payload }) => {
       state.isLoading = true;
     });
     builder.addCase(fetchSuggestions.fulfilled, (state, { payload }) => {

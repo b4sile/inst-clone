@@ -6,7 +6,7 @@ import { Button } from '..';
 import { ROUTES } from '../../constants/routes';
 import { FirebaseContext } from '../../context/firebase';
 import { useAppSelector } from '../../hooks';
-import { selectUser } from '../../redux/slices/userSlice';
+import { selectUser, selectUserUsername } from '../../redux/slices/userSlice';
 import { Menu } from '../menu';
 import s from './style.module.scss';
 
@@ -15,7 +15,7 @@ export const Navigation = () => {
     React.useState<HTMLAnchorElement | null>(null);
   const { pathname } = useLocation();
   const { firebase } = React.useContext(FirebaseContext);
-  const user = useAppSelector(selectUser);
+  const username = useAppSelector(selectUserUsername);
 
   const onSignOut = async () => {
     try {
@@ -37,7 +37,7 @@ export const Navigation = () => {
   return (
     <div className={s.container}>
       <ul className={s.list}>
-        {user ? (
+        {username ? (
           <>
             <li>
               <Link className={s.link} to={`${ROUTES.DASHBOARD}`}>
@@ -52,9 +52,9 @@ export const Navigation = () => {
               <Link
                 onClick={handleOpenUserMenu}
                 className={s.link}
-                to={`/${user.username}`}
+                to={`/${username}`}
               >
-                {pathname === `/${user.username}` || anchorElem ? (
+                {pathname === `/${username}` || anchorElem ? (
                   <FaUserCircle />
                 ) : (
                   <FaRegUserCircle />
@@ -68,7 +68,7 @@ export const Navigation = () => {
               >
                 <ul>
                   <li>
-                    <Link to={`/${user.username}`}>
+                    <Link to={`/${username}`}>
                       <Button
                         onClick={onClose}
                         variant="outlined"

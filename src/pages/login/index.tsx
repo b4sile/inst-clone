@@ -11,19 +11,23 @@ const Login = () => {
   const [emailAddress, setEmailAddress] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
+  const [isLogining, setIsLogining] = React.useState(false);
 
   const isInvalid = password === '' || emailAddress === '';
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isInvalid) return;
+    setIsLogining(true);
     try {
       await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
+      setIsLogining(false);
       history.push(ROUTES.DASHBOARD);
     } catch (err) {
       setError(err.message);
       setEmailAddress('');
       setPassword('');
+      setIsLogining(false);
     }
   };
 
@@ -60,9 +64,10 @@ const Login = () => {
             />
             <Button
               type="submit"
-              disabled={isInvalid}
+              disabled={isInvalid || isLogining}
               fullWidth
               className={s.btn}
+              isLoading={isLogining}
             >
               Login
             </Button>
