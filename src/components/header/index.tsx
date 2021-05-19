@@ -5,9 +5,9 @@ import { ROUTES } from '../../constants/routes';
 import { Search } from '../search';
 import s from './style.module.scss';
 
-export const Header = () => {
+export const Header = React.memo(() => {
   return (
-    <header>
+    <header className={s.header}>
       <div className={s.dummy}></div>
       <div className={s.wrapper}>
         <div className={s.container}>
@@ -20,4 +20,4 @@ export const Header = () => {
       </div>
     </header>
   );
-};
+});

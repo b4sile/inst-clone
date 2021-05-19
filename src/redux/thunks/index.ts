@@ -4,6 +4,8 @@ import {
 } from './../../services/firebase';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getSuggestions, getUserById } from '../../services/firebase';
+import { UserDataInterface } from '../slices/userSlice';
+import { RootState } from '..';
 
 export const fetchUserById = createAsyncThunk(
   'user/fetchById',
@@ -15,15 +17,16 @@ export const fetchUserById = createAsyncThunk(
 export type FetchSuggestionsParams = {
   userId: string;
   count: number;
-  following: string[];
 };
 
-export const fetchSuggestions = createAsyncThunk(
-  'suggestions/fetch',
-  async ({ userId, count, following }: FetchSuggestionsParams) => {
-    return await getSuggestions(userId, count, following);
-  }
-);
+export const fetchSuggestions = createAsyncThunk<
+  UserDataInterface[],
+  FetchSuggestionsParams,
+  { state: RootState }
+>('suggestions/fetch', async ({ count, userId }, { getState }) => {
+  const following = getState().user.user!.following;
+  return await getSuggestions(userId, count, following);
+});
 
 export type FetchUpdateFollowing = {
   profileDocId: string;

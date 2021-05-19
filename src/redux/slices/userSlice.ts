@@ -79,16 +79,21 @@ export const selectUserUsername = ({ user: { user } }: RootState) =>
   user && user.username;
 export const selectUserFullName = ({ user: { user } }: RootState) =>
   user && user.fullName;
-export const selectUserFollowind = ({ user: { user } }: RootState) =>
+export const selectUserFollowing = ({ user: { user } }: RootState) =>
   user && user.following;
-export const selectUserFollowers = ({ user: { user } }: RootState) =>
-  user && user.followers;
 export const selectUserId = ({ user: { user } }: RootState) =>
   user && user.userId;
 export const selectUserDocId = ({ user: { user } }: RootState) =>
   user && user.docId;
-export const selectFollowingIds = ({ user }: RootState) => user.followingIds;
 export const selectIsLoading = ({ user }: RootState) => user.isLoading;
+export const selectIsUserFollowed =
+  (profileId: string) =>
+  ({ user: { user } }: RootState) =>
+    (user && user.following.includes(profileId)) || false;
+export const selectIsUserFollowing =
+  (profileId: string) =>
+  ({ user: { followingIds } }: RootState) =>
+    followingIds.includes(profileId) || false;
 
 export const { setUser, setIsLoading } = actions;
 

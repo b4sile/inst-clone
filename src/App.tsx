@@ -22,7 +22,11 @@ function App() {
             <Route path={`${ROUTES.SIGN_UP}`} component={SignUp} exact />
             <Route
               exact
-              path={[`${ROUTES.DASHBOARD}`, `${ROUTES.PROFILE}`]}
+              path={[
+                `${ROUTES.DASHBOARD}`,
+                `${ROUTES.PROFILE}`,
+                `${ROUTES.EXPLORE_SUGGESTIONS}`,
+              ]}
               component={isLoading ? Loading : Dashboard}
             />
             <Route render={() => (isLoading ? <Loading /> : <NotFound />)} />

@@ -2,6 +2,11 @@ import React from 'react';
 import s from './style.module.scss';
 import cn from 'classnames';
 import { Button, User } from '..';
+import { useAppSelector } from '../../hooks';
+import {
+  selectIsUserFollowed,
+  selectIsUserFollowing,
+} from '../../redux/slices/userSlice';
 
 type SuggestionProps = {
   profileId: string;
@@ -12,8 +17,8 @@ type SuggestionProps = {
     profileId: string,
     method: 'add' | 'remove'
   ) => void;
-  isFollow: boolean;
-  isLoading: boolean;
+  fullName?: string;
+  variant?: 'small' | 'middle';
   className?: string;
 };
 
@@ -23,13 +28,21 @@ export const Suggestion = React.memo(
     username,
     profileDocId,
     handleFollowUser,
-    isFollow,
-    isLoading,
+    variant,
+    fullName,
     className,
   }: SuggestionProps) => {
+    const isFollow = useAppSelector(selectIsUserFollowed(profileId));
+    const isLoading = useAppSelector(selectIsUserFollowing(profileId));
+
     return (
       <div className={cn(s.suggest, className)}>
-        <User username={username} tag="popular" />
+        <User
+          username={username}
+          variant={variant}
+          {...(variant === 'middle' ? { fullName } : {})}
+          tag="popular"
+        />
         <Button
           onClick={() =>
             handleFollowUser(

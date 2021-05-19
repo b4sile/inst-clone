@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { Header, Profile } from '../../components';
+import { Header, Profile, Suggestions } from '../../components';
+import { ExploreSuggestions } from '../../components/exploreSuggestions';
 import { PrivateRoute } from '../../components/privateRoute';
 import { ROUTES } from '../../constants/routes';
 
@@ -17,6 +18,11 @@ const Dashboard = () => {
       <main>
         <Switch>
           <PrivateRoute exact path={`${ROUTES.DASHBOARD}`} component={Home} />
+          <PrivateRoute
+            exact
+            path={`${ROUTES.EXPLORE_SUGGESTIONS}`}
+            component={ExploreSuggestions}
+          />
           <Route exact path={`${ROUTES.PROFILE}`} component={Profile} />
         </Switch>
       </main>

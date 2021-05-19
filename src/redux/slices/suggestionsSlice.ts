@@ -38,6 +38,9 @@ const { actions, reducer } = createSlice({
 
 export const { setItems } = actions;
 
+export const selectIsUserHaveEmptySuggestions = ({
+  suggestions: { items },
+}: RootState) => items.length === 0;
 export const selectSuggestions = ({ suggestions: { items } }: RootState) =>
   items;
 export const selectIsLoading = ({ suggestions: { isLoading } }: RootState) =>

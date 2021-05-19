@@ -6,7 +6,7 @@ import { Button } from '..';
 import { ROUTES } from '../../constants/routes';
 import { FirebaseContext } from '../../context/firebase';
 import { useAppSelector } from '../../hooks';
-import { selectUser, selectUserUsername } from '../../redux/slices/userSlice';
+import { selectUserUsername } from '../../redux/slices/userSlice';
 import { Menu } from '../menu';
 import s from './style.module.scss';
 
