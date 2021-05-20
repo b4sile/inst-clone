@@ -1,0 +1,27 @@
+@import '../../variables.scss';
+.icons {
+  margin: 0 -8px;
+
+  button {
+    background: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.likes {
+  color: $text1;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 700;
+}
+
+.date {
+  font-size: 10px;
+  line-height: 18px;
+  color: $text2;
+}

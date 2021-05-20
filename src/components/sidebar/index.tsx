@@ -17,7 +17,7 @@ export const Sidebar = React.memo(({ className }: SidebarProps) => {
   const fullName = useAppSelector(selectUserFullName);
 
   return (
-    <aside className={cn(className)}>
+    <aside className={cn(s.aside, className)}>
       {username && fullName && (
         <User username={username} fullName={fullName} variant="big" />
       )}
@@ -29,7 +29,7 @@ export const Sidebar = React.memo(({ className }: SidebarProps) => {
           </Button>
         </Link>
       </div>
-      <Suggestions count={5} />
+      <Suggestions className={s.suggestions} count={5} />
     </aside>
   );
 });

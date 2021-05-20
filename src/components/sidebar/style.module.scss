@@ -7,3 +7,11 @@
   margin-top: 15px;
   margin-bottom: 10px;
 }
+
+.aside {
+  position: sticky;
+  top: 53px;
+  @media (max-width: $md1+px) {
+    display: none;
+  }
+}

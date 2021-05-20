@@ -27,7 +27,14 @@ export const Image = ({
   return (
     <div style={{ paddingBottom }} className={cn(s.container, className)}>
       {isLoading && <Skeleton style={{ width: '100%', height: '500px' }} />}
-      <img src={src} decoding="auto" onLoad={onLoad} {...rest} alt={alt} />
+      <img
+        style={isLoading ? { display: 'none' } : {}}
+        decoding="auto"
+        onLoad={onLoad}
+        src={src}
+        {...rest}
+        alt={alt}
+      />
     </div>
   );
 };

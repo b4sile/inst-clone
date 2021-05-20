@@ -74,7 +74,6 @@ const { actions, reducer } = createSlice({
   },
 });
 
-export const selectUser = ({ user }: RootState) => user.user;
 export const selectUserUsername = ({ user: { user } }: RootState) =>
   user && user.username;
 export const selectUserFullName = ({ user: { user } }: RootState) =>
@@ -85,6 +84,7 @@ export const selectUserId = ({ user: { user } }: RootState) =>
   user && user.userId;
 export const selectUserDocId = ({ user: { user } }: RootState) =>
   user && user.docId;
+export const selectUser = ({ user }: RootState) => user.user;
 export const selectIsLoading = ({ user }: RootState) => user.isLoading;
 export const selectIsUserFollowed =
   (profileId: string) =>

@@ -55,3 +55,7 @@ textarea {
 button {
   cursor: pointer;
 }
+
+html {
+  overflow-y: scroll;
+}

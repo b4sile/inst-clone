@@ -1,4 +1,5 @@
 import {
+  getPhotosForTimeline,
   updateUserFollowers,
   updateUserFollowing,
 } from './../../services/firebase';
@@ -6,6 +7,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getSuggestions, getUserById } from '../../services/firebase';
 import { UserDataInterface } from '../slices/userSlice';
 import { RootState } from '..';
+import { PostInterface } from '../slices/timelineSlice';
 
 export const fetchUserById = createAsyncThunk(
   'user/fetchById',
@@ -51,3 +53,13 @@ export const fetchUpdateFollowing = createAsyncThunk(
     ]);
   }
 );
+
+export const fetchTimelinePosts = createAsyncThunk<
+  PostInterface[],
+  undefined,
+  { state: RootState }
+>('timeline/fetchPosts', async (_, { getState }) => {
+  const following = getState().user.user?.following;
+  if (!following || !following.length) return [];
+  return await getPhotosForTimeline(following);
+});

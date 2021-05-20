@@ -1,5 +1,6 @@
 import { firebase, FieldValue } from '../context/firebase';
 import { UserDataInterface } from '../redux/slices/userSlice';
+import { PhotoInterface, PostInterface } from '../redux/slices/timelineSlice';
 
 export const doesUsernameExist = async (username: string) => {
   const result = await firebase
@@ -12,18 +13,16 @@ export const doesUsernameExist = async (username: string) => {
 
 export const getUserById = async (
   userId: string
-): Promise<UserDataInterface | null> => {
+): Promise<UserDataInterface> => {
   const user = await firebase
     .firestore()
     .collection('users')
     .where('userId', '==', userId)
     .get();
-  return user.docs.length > 0
-    ? (user.docs.reduce(
-        (obj, doc) => (obj = { ...doc.data(), docId: doc.id }),
-        {}
-      ) as UserDataInterface)
-    : null;
+  return user.docs.reduce(
+    (obj, doc) => (obj = { ...doc.data(), docId: doc.id }),
+    {}
+  ) as UserDataInterface;
 };
 
 export const getSuggestions = async (
@@ -75,4 +74,26 @@ export const updateUserFollowers = async (
           ? FieldValue.arrayUnion(profileId)
           : FieldValue.arrayRemove(profileId),
     });
+};
+
+export const getPhotosForTimeline = async (
+  following: string[]
+): Promise<PostInterface[]> => {
+  const photosResponse = await firebase
+    .firestore()
+    .collection('photos')
+    .where('userId', 'in', following)
+    .orderBy('dateCreated', 'desc')
+    .limit(3)
+    .get();
+
+  const photos = photosResponse.docs.map(
+    (doc) => ({ ...doc.data(), docId: doc.id } as PhotoInterface)
+  );
+
+  const users = await Promise.all(
+    photos.map((photo) => getUserById(photo.userId))
+  );
+
+  return users.map((user, ind) => ({ user, ...photos[ind] }));
 };

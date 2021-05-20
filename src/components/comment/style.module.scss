@@ -1,0 +1,24 @@
+@import '../../variables.scss';
+.container {
+  display: flex;
+}
+
+.text {
+  flex: 1;
+  font-size: 14px;
+  line-height: 18px;
+  color: $text1;
+}
+
+.withAvatar {
+  margin-left: 16px;
+}
+
+.link {
+  color: $text1;
+  font-weight: 700;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

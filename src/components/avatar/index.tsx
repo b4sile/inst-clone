@@ -15,8 +15,9 @@ export const Avatar = ({ url, size = 32, className }: AvatarProps) => {
     >
       {isLoading && url && <Skeleton circle width={size} height={size} />}
       <img
-        onLoad={() => setIsLoading(false)}
+        style={isLoading ? { display: 'none' } : {}}
         src={url || 'images/avatars/default.png'}
+        onLoad={() => setIsLoading(false)}
         alt="Avatar"
       />
     </div>

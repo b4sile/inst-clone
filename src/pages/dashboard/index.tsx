@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { Header, Profile, Suggestions } from '../../components';
+import { Header, Profile } from '../../components';
 import { ExploreSuggestions } from '../../components/exploreSuggestions';
 import { PrivateRoute } from '../../components/privateRoute';
 import { ROUTES } from '../../constants/routes';
