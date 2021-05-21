@@ -4,9 +4,9 @@ import s from './style.module.scss';
 import TextareaAutosize from 'react-textarea-autosize';
 import { Button } from '..';
 
-type CommentInputProps = { className?: string };
+type CommentInputProps = { docId: string; className?: string };
 
-export const CommentInput = ({ className }: CommentInputProps) => {
+export const CommentInput = ({ docId, className }: CommentInputProps) => {
   return (
     <div className={cn(s.container, className)}>
       <TextareaAutosize placeholder="Add a comment..." className={s.textarea} />

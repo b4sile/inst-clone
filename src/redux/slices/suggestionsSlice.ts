@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '..';
-import { fetchSuggestions } from '../thunks';
+import { fetchSuggestions, fetchUpdateFollowing } from '../thunks';
 import { UserDataInterface } from './userSlice';
 
 interface SuggestionsState {
@@ -32,6 +32,22 @@ const { actions, reducer } = createSlice({
     builder.addCase(fetchSuggestions.rejected, (state, action) => {
       state.isLoading = false;
       console.log(action.error);
+    });
+    builder.addCase(fetchUpdateFollowing.fulfilled, (state, { meta }) => {
+      const method = meta.arg.method;
+      const profileId = meta.arg.profileId;
+      const userId = meta.arg.userId;
+
+      const profile = state.items.find((prof) => prof.userId === profileId);
+
+      if (profile) {
+        if (method === 'add') profile.followers.push(userId);
+        else {
+          profile.followers = profile.followers.filter(
+            (followId) => followId !== userId
+          );
+        }
+      }
     });
   },
 });

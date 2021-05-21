@@ -15,7 +15,7 @@ export const useTimelinePosts = () => {
 
   React.useEffect(() => {
     if (userId) {
-      dispatch(fetchTimelinePosts());
+      dispatch(fetchTimelinePosts(userId));
     }
   }, [dispatch, userId]);
 

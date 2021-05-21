@@ -1,9 +1,9 @@
-import { fetchTimelinePosts } from './../thunks/index';
+import { fetchTimelinePosts, fetchUpdatePostLikes } from './../thunks/index';
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '..';
 import { UserDataInterface } from './userSlice';
 
-interface CommentInterface {
+export interface CommentInterface {
   comment: string;
   displayName: string;
 }
@@ -19,6 +19,7 @@ export interface PhotoInterface {
   userLatitude: string;
   userLongitude: string;
   docId: string;
+  isLiked: boolean;
 }
 
 export interface PostInterface extends PhotoInterface {
@@ -54,6 +55,20 @@ const { actions, reducer } = createSlice({
     builder.addCase(fetchTimelinePosts.rejected, (state, action) => {
       state.isLoading = false;
       console.log(action.error);
+    });
+    builder.addCase(fetchUpdatePostLikes.fulfilled, (state, { meta }) => {
+      const docId = meta.arg.docId;
+      const userId = meta.arg.userId;
+      const method = meta.arg.method;
+      const photo = state.items.find((item) => item.docId === docId);
+
+      if (photo) {
+        photo.isLiked = !photo.isLiked;
+        if (method === 'add') photo.likes.push(userId);
+        else {
+          photo.likes = photo.likes.filter((id) => id !== userId);
+        }
+      }
     });
   },
 });

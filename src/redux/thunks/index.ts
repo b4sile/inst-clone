@@ -2,12 +2,14 @@ import {
   getPhotosForTimeline,
   updateUserFollowers,
   updateUserFollowing,
+  updatePostLikes,
+  updatePostComments,
 } from './../../services/firebase';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getSuggestions, getUserById } from '../../services/firebase';
 import { UserDataInterface } from '../slices/userSlice';
 import { RootState } from '..';
-import { PostInterface } from '../slices/timelineSlice';
+import { CommentInterface, PostInterface } from '../slices/timelineSlice';
 
 export const fetchUserById = createAsyncThunk(
   'user/fetchById',
@@ -56,10 +58,38 @@ export const fetchUpdateFollowing = createAsyncThunk(
 
 export const fetchTimelinePosts = createAsyncThunk<
   PostInterface[],
-  undefined,
+  string,
   { state: RootState }
->('timeline/fetchPosts', async (_, { getState }) => {
+>('timeline/fetchPosts', async (userId, { getState }) => {
   const following = getState().user.user?.following;
+
   if (!following || !following.length) return [];
-  return await getPhotosForTimeline(following);
+  return await getPhotosForTimeline(following, userId);
+});
+
+export type FetchUpdatePostLikes = {
+  method: 'add' | 'remove';
+  docId: string;
+  userId: string;
+};
+
+export const fetchUpdatePostLikes = createAsyncThunk<
+  void,
+  FetchUpdatePostLikes,
+  { state: RootState }
+>('timeline/updatePostLikes', async ({ docId, userId, method }) => {
+  return await updatePostLikes(docId, userId, method);
+});
+
+export type FetchUpdatePostComments = {
+  comment: CommentInterface;
+  docId: string;
+};
+
+export const fetchUpdatePostComments = createAsyncThunk<
+  void,
+  FetchUpdatePostComments,
+  { state: RootState }
+>('timeline/updatePostLikes', async ({ docId, comment }) => {
+  return await updatePostComments(docId, comment);
 });

@@ -1,3 +1,4 @@
+import { CommentInterface } from './../redux/slices/timelineSlice';
 import { firebase, FieldValue } from '../context/firebase';
 import { UserDataInterface } from '../redux/slices/userSlice';
 import { PhotoInterface, PostInterface } from '../redux/slices/timelineSlice';
@@ -77,7 +78,8 @@ export const updateUserFollowers = async (
 };
 
 export const getPhotosForTimeline = async (
-  following: string[]
+  following: string[],
+  userId: string
 ): Promise<PostInterface[]> => {
   const photosResponse = await firebase
     .firestore()
@@ -95,5 +97,39 @@ export const getPhotosForTimeline = async (
     photos.map((photo) => getUserById(photo.userId))
   );
 
-  return users.map((user, ind) => ({ user, ...photos[ind] }));
+  return users.map((user, ind) => ({
+    user,
+    ...photos[ind],
+    isLiked: photos[ind].likes.includes(userId),
+  }));
+};
+
+export const updatePostLikes = async (
+  docId: string,
+  userId: string,
+  method: 'add' | 'remove'
+) => {
+  return firebase
+    .firestore()
+    .collection('photos')
+    .doc(docId)
+    .update({
+      likes:
+        method === 'add'
+          ? FieldValue.arrayUnion(userId)
+          : FieldValue.arrayRemove(userId),
+    });
+};
+
+export const updatePostComments = async (
+  docId: string,
+  comment: CommentInterface
+) => {
+  return firebase
+    .firestore()
+    .collection('photos')
+    .doc(docId)
+    .update({
+      comments: FieldValue.arrayUnion(comment),
+    });
 };

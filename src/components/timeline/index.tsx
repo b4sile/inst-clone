@@ -7,7 +7,7 @@ import { PostSkeleton } from '../postSkeleton';
 
 type TimeLineProps = { className?: string };
 
-export const Timeline = ({ className }: TimeLineProps) => {
+export const Timeline = React.memo(({ className }: TimeLineProps) => {
   const [posts, isLoading] = useTimelinePosts();
 
   return (
@@ -24,4 +24,4 @@ export const Timeline = ({ className }: TimeLineProps) => {
       )}
     </div>
   );
-};
+});

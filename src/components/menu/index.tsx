@@ -20,26 +20,27 @@ export const Menu = ({
   isInputMenu,
 }: MenuProps) => {
   const menuRef = React.useRef<HTMLDivElement>(null);
-  const handleOutsideClick = (e: MouseEvent) => {
-    if (visible && !menuRef.current?.contains(e.target as Node)) {
-      if (!isInputMenu) onClose();
-      else {
-        if (!anchorElem?.contains(e.target as Node)) onClose();
-      }
-    }
-  };
-  const handleTab = (e: KeyboardEvent) => {
-    if (
-      e.key === 'Tab' &&
-      visible &&
-      document.activeElement !== anchorElem &&
-      !menuRef.current?.contains(e.target as Node)
-    ) {
-      onClose();
-    }
-  };
 
   React.useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (visible && !menuRef.current?.contains(e.target as Node)) {
+        if (!isInputMenu) onClose();
+        else {
+          if (!anchorElem?.contains(e.target as Node)) onClose();
+        }
+      }
+    };
+    const handleTab = (e: KeyboardEvent) => {
+      if (
+        e.key === 'Tab' &&
+        visible &&
+        document.activeElement !== anchorElem &&
+        !menuRef.current?.contains(e.target as Node)
+      ) {
+        onClose();
+      }
+    };
+
     if (menuRef.current) {
       document.body.addEventListener('click', handleOutsideClick);
       document.body.addEventListener('keyup', handleTab);
@@ -48,7 +49,7 @@ export const Menu = ({
       document.body.removeEventListener('click', handleOutsideClick);
       document.body.removeEventListener('keyup', handleTab);
     };
-  }, [visible]);
+  }, [visible, anchorElem, isInputMenu, onClose]);
 
   return (
     <div

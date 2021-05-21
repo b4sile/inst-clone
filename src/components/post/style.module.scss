@@ -5,3 +5,20 @@
 .middle {
   padding: 4px 16px 8px 16px;
 }
+
+.comments {
+  margin-top: 10px;
+}
+
+.comment {
+  margin-bottom: 5px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.caption {
+  margin-top: 8px;
+  font-size: 20px;
+}

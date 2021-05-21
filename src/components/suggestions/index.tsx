@@ -1,7 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
 import { useSuggestions } from '../../hooks/useSuggestions';
-import Skeleton from 'react-loading-skeleton';
 import { Suggestion } from '../suggestion';
 import { UserSkeleton } from '../userSkeleton';
 

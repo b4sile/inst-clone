@@ -30,9 +30,9 @@ export const Navigation = () => {
     if (!anchorElem) setAnchorElem(e.currentTarget);
   };
 
-  const onClose = () => {
+  const onClose = React.useCallback(() => {
     setAnchorElem(null);
-  };
+  }, []);
 
   return (
     <div className={s.container}>
