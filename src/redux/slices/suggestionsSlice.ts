@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '..';
 import { fetchSuggestions, fetchUpdateFollowing } from '../thunks';
 import { UserDataInterface } from './userSlice';
@@ -17,12 +17,12 @@ const { actions, reducer } = createSlice({
   name: 'suggestions',
   initialState,
   reducers: {
-    setItems: (state, { payload }) => {
+    setItems: (state, { payload }: PayloadAction<UserDataInterface[]>) => {
       state.items = payload;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchSuggestions.pending, (state, { payload }) => {
+    builder.addCase(fetchSuggestions.pending, (state) => {
       state.isLoading = true;
     });
     builder.addCase(fetchSuggestions.fulfilled, (state, { payload }) => {

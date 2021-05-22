@@ -1,9 +1,12 @@
+import { ProfileItemValueInterface } from './../slices/profileSlice';
 import {
   getPhotosForTimeline,
   updateUserFollowers,
   updateUserFollowing,
   updatePostLikes,
   updatePostComments,
+  getUserByUsername,
+  getProfilePosts,
 } from './../../services/firebase';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getSuggestions, getUserById } from '../../services/firebase';
@@ -90,6 +93,19 @@ export const fetchUpdatePostComments = createAsyncThunk<
   void,
   FetchUpdatePostComments,
   { state: RootState }
->('timeline/updatePostLikes', async ({ docId, comment }) => {
-  return await updatePostComments(docId, comment);
+>('timeline/updatePostComments', async ({ docId, comment }, { getState }) => {
+  const post = getState().timeline.items.find((item) => item.docId === docId);
+  if (post) return await updatePostComments(docId, [...post.comments, comment]);
+});
+
+export const fetchProfile = createAsyncThunk<
+  ProfileItemValueInterface | null,
+  string,
+  { state: RootState }
+>('profile/fetch', async (username, { getState }) => {
+  const userId = getState().user.user?.userId || null;
+  const user = await getUserByUsername(username);
+  if (!user) return null;
+  const posts = await getProfilePosts(user.userId, userId);
+  return { user, posts };
 });

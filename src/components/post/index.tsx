@@ -45,8 +45,8 @@ export const Post = React.memo(
               text={caption}
             />
             <ul className={s.comments}>
-              {comments.map(({ comment, displayName }) => (
-                <li className={s.comment} key={displayName}>
+              {comments.map(({ comment, displayName }, ind) => (
+                <li className={s.comment} key={`${displayName}_${ind}`}>
                   <Comment username={displayName} text={comment} />
                 </li>
               ))}

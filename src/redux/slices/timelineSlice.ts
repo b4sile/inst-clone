@@ -1,5 +1,9 @@
-import { fetchTimelinePosts, fetchUpdatePostLikes } from './../thunks/index';
-import { createSlice } from '@reduxjs/toolkit';
+import {
+  fetchTimelinePosts,
+  fetchUpdatePostComments,
+  fetchUpdatePostLikes,
+} from './../thunks/index';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '..';
 import { UserDataInterface } from './userSlice';
 
@@ -40,7 +44,7 @@ const { actions, reducer } = createSlice({
   name: 'timeline',
   initialState,
   reducers: {
-    setItems: (state, { payload }) => {
+    setItems: (state, { payload }: PayloadAction<PostInterface[]>) => {
       state.items = payload;
     },
   },
@@ -70,6 +74,15 @@ const { actions, reducer } = createSlice({
         }
       }
     });
+    builder.addCase(fetchUpdatePostComments.fulfilled, (state, { meta }) => {
+      const docId = meta.arg.docId;
+      const comment = meta.arg.comment;
+      const photo = state.items.find((item) => item.docId === docId);
+
+      if (photo) {
+        photo.comments.push(comment);
+      }
+    });
   },
 });
 
@@ -77,6 +90,10 @@ export const selectTimelineItems = ({ timeline: { items } }: RootState) =>
   items;
 export const selectIsLoading = ({ timeline: { isLoading } }: RootState) =>
   isLoading;
+export const selectPost =
+  (docId: string) =>
+  ({ timeline: { items } }: RootState) =>
+    items.find((item) => item.docId === docId);
 
 export const { setItems } = actions;
 

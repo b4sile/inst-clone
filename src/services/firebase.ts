@@ -26,6 +26,22 @@ export const getUserById = async (
   ) as UserDataInterface;
 };
 
+export const getUserByUsername = async (
+  username: string
+): Promise<UserDataInterface | null> => {
+  const user = await firebase
+    .firestore()
+    .collection('users')
+    .where('username', '==', username)
+    .get();
+  return user.docs.length > 0
+    ? (user.docs.reduce(
+        (obj, doc) => (obj = { ...doc.data(), docId: doc.id }),
+        {}
+      ) as UserDataInterface)
+    : null;
+};
+
 export const getSuggestions = async (
   userId: string,
   count: number,
@@ -123,13 +139,26 @@ export const updatePostLikes = async (
 
 export const updatePostComments = async (
   docId: string,
-  comment: CommentInterface
+  comments: CommentInterface[]
 ) => {
-  return firebase
+  return firebase.firestore().collection('photos').doc(docId).update({
+    comments,
+  });
+};
+
+export const getProfilePosts = async (
+  profileUserId: string,
+  userId: string | null
+): Promise<PhotoInterface[]> => {
+  const posts = await firebase
     .firestore()
     .collection('photos')
-    .doc(docId)
-    .update({
-      comments: FieldValue.arrayUnion(comment),
-    });
+    .where('userId', '==', profileUserId)
+    .get();
+
+  return posts.docs.map((doc) => ({
+    ...doc.data(),
+    docId: doc.id,
+    isLiked: userId ? doc.data().likes.includes(userId) : false,
+  })) as PhotoInterface[];
 };
