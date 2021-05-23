@@ -42,6 +42,22 @@ export const getUserByUsername = async (
     : null;
 };
 
+export const getPostById = async (
+  photoId: string
+): Promise<PhotoInterface | null> => {
+  const post = await firebase
+    .firestore()
+    .collection('photos')
+    .where('photoId', '==', +photoId)
+    .get();
+  return post.docs.length > 0
+    ? (post.docs.reduce(
+        (obj, doc) => (obj = { ...doc.data(), docId: doc.id }),
+        {}
+      ) as PhotoInterface)
+    : null;
+};
+
 export const getSuggestions = async (
   userId: string,
   count: number,

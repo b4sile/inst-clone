@@ -26,6 +26,7 @@ function App() {
                 `${ROUTES.DASHBOARD}`,
                 `${ROUTES.PROFILE}`,
                 `${ROUTES.EXPLORE_SUGGESTIONS}`,
+                `${ROUTES.POST}`,
               ]}
               component={isLoading ? Loading : Dashboard}
             />

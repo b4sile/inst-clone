@@ -3,6 +3,7 @@ import userReducer from './slices/userSlice';
 import suggestionsReducer from './slices/suggestionsSlice';
 import timelineReducer from './slices/timelineSlice';
 import profileReducer from './slices/profileSlice';
+import postReducer from './slices/postSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     suggestions: suggestionsReducer,
     timeline: timelineReducer,
     profile: profileReducer,
+    post: postReducer,
   },
 });
 

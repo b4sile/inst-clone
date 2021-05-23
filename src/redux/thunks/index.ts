@@ -7,12 +7,17 @@ import {
   updatePostComments,
   getUserByUsername,
   getProfilePosts,
+  getPostById,
 } from './../../services/firebase';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getSuggestions, getUserById } from '../../services/firebase';
 import { UserDataInterface } from '../slices/userSlice';
 import { RootState } from '..';
-import { CommentInterface, PostInterface } from '../slices/timelineSlice';
+import {
+  CommentInterface,
+  PhotoInterface,
+  PostInterface,
+} from '../slices/timelineSlice';
 
 export const fetchUserById = createAsyncThunk(
   'user/fetchById',
@@ -20,6 +25,19 @@ export const fetchUserById = createAsyncThunk(
     return await getUserById(userId);
   }
 );
+
+export const fetchPostById = createAsyncThunk<
+  { post: PhotoInterface; user: UserDataInterface } | null,
+  string,
+  { state: RootState }
+>('post/fetchById', async (photoId, { getState }) => {
+  const post = await getPostById(photoId);
+  if (!post) return null;
+  const userId = getState().user.user?.userId;
+  post.isLiked = (userId && post.likes.includes(userId)) || false;
+  const user = await getUserById(post.userId);
+  return { post, user };
+});
 
 export type FetchSuggestionsParams = {
   userId: string;
@@ -87,16 +105,27 @@ export const fetchUpdatePostLikes = createAsyncThunk<
 export type FetchUpdatePostComments = {
   comment: CommentInterface;
   docId: string;
+  variant: 'timeline' | 'fullpost';
 };
 
 export const fetchUpdatePostComments = createAsyncThunk<
   void,
   FetchUpdatePostComments,
   { state: RootState }
->('timeline/updatePostComments', async ({ docId, comment }, { getState }) => {
-  const post = getState().timeline.items.find((item) => item.docId === docId);
-  if (post) return await updatePostComments(docId, [...post.comments, comment]);
-});
+>(
+  'timeline/updatePostComments',
+  async ({ docId, comment, variant }, { getState }) => {
+    let post: PostInterface | undefined;
+    if (variant === 'timeline')
+      post = getState().timeline.items.find((item) => item.docId === docId);
+    else
+      post = Object.values(getState().post.items).find(
+        (item) => item && item.docId === docId
+      );
+    if (post)
+      return await updatePostComments(docId, [...post.comments, comment]);
+  }
+);
 
 export const fetchProfile = createAsyncThunk<
   ProfileItemValueInterface | null,

@@ -3,7 +3,10 @@ import React from 'react';
 import { useAppDispatch, useAppSelector } from '.';
 import { selectUserUsername } from '../redux/slices/userSlice';
 
-export const useAddComment = (docId: string) => {
+export const useAddComment = (
+  docId: string,
+  variant: 'timeline' | 'fullpost'
+) => {
   const [message, setMessage] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
   const dispatch = useAppDispatch();
@@ -17,6 +20,7 @@ export const useAddComment = (docId: string) => {
         fetchUpdatePostComments({
           docId,
           comment: { displayName: username, comment: message },
+          variant,
         })
       );
       setMessage('');

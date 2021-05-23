@@ -91,9 +91,9 @@ export const selectIsUserFollowed =
   ({ user: { user } }: RootState) =>
     (user && user.following.includes(profileId)) || false;
 export const selectIsUserFollowing =
-  (profileId: string) =>
+  (profileId: string | undefined) =>
   ({ user: { followingIds } }: RootState) =>
-    followingIds.includes(profileId) || false;
+    (profileId && followingIds.includes(profileId)) || false;
 
 export const { setUser, setIsLoading } = actions;
 

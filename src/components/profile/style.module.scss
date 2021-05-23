@@ -1,17 +1,58 @@
+@import '../../variables.scss';
 .container {
-  padding: 30px 20px 0px;
+  padding: 30px 20px;
 }
 
 .top {
   display: flex;
+  padding-bottom: 30px;
+  border-bottom: 1px solid $border;
+
+  @media (max-width: $md2+px) {
+    flex-direction: column;
+  }
 }
 
 .left {
-  flex: 0 0 30%;
+  flex: 0 0 35%;
   display: flex;
   justify-content: center;
+  @media (max-width: $md2+px) {
+    margin-bottom: 15px;
+  }
 }
 
 .right {
   flex: 1;
+  @media (max-width: $md2+px) {
+    align-self: center;
+  }
+}
+
+.right__top {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+
+  button {
+    margin-left: 20px;
+  }
+}
+
+.list {
+  display: flex;
+  margin-bottom: 20px;
+
+  li {
+    margin-left: 20px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
+  span {
+    font-size: 18px;
+    font-weight: 700;
+  }
 }

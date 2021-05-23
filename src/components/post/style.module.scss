@@ -1,5 +1,14 @@
+@import '../../variables.scss';
 .header {
   padding: 16px;
+}
+
+.header__fullpost {
+  border-bottom: 1px solid $border;
+}
+
+.container__fullpost {
+  padding-top: 40px;
 }
 
 .middle {
@@ -21,4 +30,26 @@
 .caption {
   margin-top: 8px;
   font-size: 20px;
+}
+
+.fullpost {
+  display: flex;
+
+  @media (max-width: $md2+px) {
+    flex-direction: column;
+  }
+}
+
+.img__fullpost {
+  flex: 0 1 100%;
+  border-right: 1px solid $border;
+}
+
+.fullpost__right {
+  flex: 1 0 33.333%;
+  min-width: 300px;
+}
+
+.fullpost__input {
+  border-bottom: 1px solid $border;
 }

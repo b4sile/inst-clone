@@ -5,6 +5,7 @@ import Skeleton from 'react-loading-skeleton';
 
 interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   src: string;
+  isProfileImage?: boolean;
 }
 
 export const Image = ({
@@ -12,6 +13,7 @@ export const Image = ({
   className,
   alt,
   decoding,
+  isProfileImage,
   ...rest
 }: ImageProps) => {
   const [isLoading, setIsLoading] = React.useState(true);
@@ -25,8 +27,22 @@ export const Image = ({
   };
 
   return (
-    <div style={{ paddingBottom }} className={cn(s.container, className)}>
-      {isLoading && <Skeleton style={{ width: '100%', height: '500px' }} />}
+    <div
+      style={{
+        paddingBottom: `${
+          isProfileImage && !isLoading ? '100%' : paddingBottom
+        }`,
+      }}
+      className={cn(s.container, className)}
+    >
+      {isLoading && (
+        <Skeleton
+          style={{
+            width: '100%',
+            height: `${isProfileImage ? '293px' : '500px'}`,
+          }}
+        />
+      )}
       <img
         style={isLoading ? { display: 'none' } : {}}
         decoding="auto"

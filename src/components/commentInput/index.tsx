@@ -5,11 +5,19 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { Button } from '..';
 import { useAddComment } from '../../hooks/useAddComment';
 
-type CommentInputProps = { docId: string; className?: string };
+type CommentInputProps = {
+  docId: string;
+  variant: 'timeline' | 'fullpost';
+  className?: string;
+};
 
-export const CommentInput = ({ docId, className }: CommentInputProps) => {
+export const CommentInput = ({
+  docId,
+  variant,
+  className,
+}: CommentInputProps) => {
   const { handleAddComment, message, setMessage, isLoading, onKeyDown } =
-    useAddComment(docId);
+    useAddComment(docId, variant);
 
   return (
     <div className={cn(s.container, className)}>
