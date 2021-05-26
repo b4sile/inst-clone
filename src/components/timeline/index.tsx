@@ -13,7 +13,7 @@ export const Timeline = React.memo(({ className }: TimeLineProps) => {
   return (
     <div className={cn(s.container, className)}>
       <h1 className={s.header}>Getting Started</h1>
-      {isLoading ? (
+      {isLoading && !posts.length ? (
         Array.from({ length: 3 }, (_, ind) => <PostSkeleton key={ind} />)
       ) : posts.length ? (
         posts.map((post) => (

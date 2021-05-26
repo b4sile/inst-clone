@@ -12,7 +12,7 @@ import s from './style.module.scss';
 
 export const Navigation = () => {
   const [anchorElem, setAnchorElem] =
-    React.useState<HTMLAnchorElement | null>(null);
+    React.useState<HTMLButtonElement | null>(null);
   const { pathname } = useLocation();
   const { firebase } = React.useContext(FirebaseContext);
   const username = useAppSelector(selectUserUsername);
@@ -25,7 +25,7 @@ export const Navigation = () => {
     }
   };
 
-  const handleOpenUserMenu = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleOpenUserMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!anchorElem) setAnchorElem(e.currentTarget);
   };
@@ -49,17 +49,18 @@ export const Navigation = () => {
               </Link>
             </li>
             <li>
-              <Link
+              <Button
+                variant="outlined"
+                color="secondary"
                 onClick={handleOpenUserMenu}
                 className={s.link}
-                to={`/${username}`}
               >
                 {pathname === `/${username}` || anchorElem ? (
                   <FaUserCircle />
                 ) : (
                   <FaRegUserCircle />
                 )}
-              </Link>
+              </Button>
               <Menu
                 anchorElem={anchorElem}
                 onClose={onClose}

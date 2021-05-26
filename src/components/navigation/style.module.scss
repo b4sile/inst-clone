@@ -2,6 +2,7 @@
 .link {
   color: #000;
   margin-left: 22px;
+  background-color: #fff !important;
 
   svg {
     width: 22px;
@@ -25,9 +26,10 @@
   height: auto;
   display: flex;
   flex-direction: column;
+  left: -120px;
 
   &::after,
   &::before {
-    left: 69%;
+    left: 90%;
   }
 }

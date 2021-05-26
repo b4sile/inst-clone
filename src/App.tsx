@@ -18,8 +18,12 @@ function App() {
       <Router>
         <Suspense fallback={<Loading />}>
           <Switch>
-            <Route path={`${ROUTES.LOGIN}`} component={Login} exact />
-            <Route path={`${ROUTES.SIGN_UP}`} component={SignUp} exact />
+            <Route path={`${ROUTES.LOGIN}`} exact>
+              <Login />
+            </Route>
+            <Route path={`${ROUTES.SIGN_UP}`} exact>
+              <SignUp />
+            </Route>
             <Route
               exact
               path={[
@@ -28,9 +32,10 @@ function App() {
                 `${ROUTES.EXPLORE_SUGGESTIONS}`,
                 `${ROUTES.POST}`,
               ]}
-              component={isLoading ? Loading : Dashboard}
-            />
-            <Route render={() => (isLoading ? <Loading /> : <NotFound />)} />
+            >
+              {isLoading ? <Loading /> : <Dashboard />}
+            </Route>
+            <Route>{isLoading ? <Loading /> : <NotFound />}</Route>
           </Switch>
         </Suspense>
       </Router>

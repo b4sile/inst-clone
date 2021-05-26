@@ -10,7 +10,6 @@ export const usePost = () => {
   const post = useAppSelector(selectPostById(id));
   const isLoading = useAppSelector(selectIsLoading);
 
-  console.log(id);
   React.useEffect(() => {
     if (id) {
       dispatch(fetchPostById(id));

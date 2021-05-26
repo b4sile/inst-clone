@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 interface PostProps extends PostInterface {
   className?: string;
   isFullPost?: boolean;
+  isModalPost?: boolean;
 }
 
 export const Post = React.memo(
@@ -28,28 +29,41 @@ export const Post = React.memo(
     likes,
     isFullPost,
     photoId,
+    isModalPost,
   }: PostProps) => {
     return (
       <article
         className={cn(
           s.container,
-          { [s.container__fullpost]: isFullPost },
+          {
+            [s.container__fullpost]: isFullPost,
+            [s.container__modalpost]: isModalPost,
+          },
           className
         )}
       >
-        <Paper className={cn({ [s.fullpost]: isFullPost })}>
+        <Paper
+          className={cn({
+            [s.fullpost]: isFullPost,
+            [s.paper__modalpost]: isModalPost,
+          })}
+        >
           {!isFullPost && (
             <header className={s.header}>
               <User username={user.username} />
             </header>
           )}
           {isFullPost ? (
-            <div className={s.img__fullpost}>
+            <div
+              className={cn(s.img__fullpost, {
+                [s.img__modalpost]: isModalPost,
+              })}
+            >
               <Image src={imageSrc} />
             </div>
           ) : (
             <Link to={`/p/${photoId}`}>
-              <Image src={imageSrc} className={s.img__fullpost} />
+              <Image src={imageSrc} className={cn(s.img__fullpost)} />
             </Link>
           )}
           <div className={cn({ [s.fullpost__right]: isFullPost })}>
@@ -60,8 +74,9 @@ export const Post = React.memo(
                 <User username={user.username} />
               </header>
             )}
-            <div className={s.middle}>
+            <div className={cn(s.middle, { [s.middle__fullpost]: isFullPost })}>
               <Controls
+                className={cn({ [s.controls__fullpost]: isFullPost })}
                 date={dateCreated}
                 isLiked={isLiked}
                 countLikes={likes.length}
@@ -72,13 +87,31 @@ export const Post = React.memo(
                 username={user.username}
                 text={caption}
               />
-              <ul className={s.comments}>
-                {comments.map(({ comment, displayName }, ind) => (
-                  <li className={s.comment} key={`${displayName}_${ind}`}>
-                    <Comment username={displayName} text={comment} />
-                  </li>
-                ))}
-              </ul>
+              <div
+                className={cn(s.comments, {
+                  [s.comments__fullpost]: isFullPost,
+                })}
+              >
+                <ul className={cn({ [s.comments__list]: isFullPost })}>
+                  {comments
+                    .slice(
+                      !isFullPost ? comments.length - 2 : 0,
+                      comments.length
+                    )
+                    .map(({ comment, displayName }, ind) => (
+                      <li className={s.comment} key={`${displayName}_${ind}`}>
+                        <Comment username={displayName} text={comment} />
+                      </li>
+                    ))}
+                  {!isFullPost && comments.length > 2 && (
+                    <li>
+                      <Link to={`/p/${photoId}`} className={s.comments__link}>
+                        See all {comments.length} comments.
+                      </Link>
+                    </li>
+                  )}
+                </ul>
+              </div>
             </div>
             <CommentInput
               variant={isFullPost ? 'fullpost' : 'timeline'}

@@ -6,11 +6,11 @@ import { selectUserUsername } from '../../redux/slices/userSlice';
 
 interface PrivateRouteProps extends RouteProps {}
 
-export const PrivateRoute = ({ ...rest }: PrivateRouteProps) => {
+export const PrivateRoute = ({ children, ...rest }: PrivateRouteProps) => {
   const username = useAppSelector(selectUserUsername);
 
   if (username) {
-    return <Route {...rest} />;
+    return <Route {...rest}>{children}</Route>;
   }
   return <Redirect to={`${ROUTES.LOGIN}`} />;
 };

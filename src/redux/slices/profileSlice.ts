@@ -1,6 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '..';
-import { fetchProfile, fetchUpdateFollowing } from '../thunks';
+import {
+  fetchProfile,
+  fetchUpdateFollowing,
+  fetchUpdatePostComments,
+  fetchUpdatePostLikes,
+} from '../thunks';
 import { PhotoInterface } from './timelineSlice';
 import { UserDataInterface } from './userSlice';
 
@@ -67,6 +72,39 @@ const { actions, reducer } = createSlice({
           item.user.followers = item.user.followers.filter(
             (id) => id !== userId
           );
+        }
+      }
+    });
+    builder.addCase(fetchUpdatePostComments.fulfilled, (state, { meta }) => {
+      const docId = meta.arg.docId;
+      const comment = meta.arg.comment;
+      const photo = Object.values(state.items).find((item) =>
+        item?.posts.find((post) => post.docId === docId)
+      );
+
+      if (photo) {
+        state.items[photo.user.username]?.posts
+          .find((post) => post.docId === docId)
+          ?.comments.push(comment);
+      }
+    });
+    builder.addCase(fetchUpdatePostLikes.fulfilled, (state, { meta }) => {
+      const docId = meta.arg.docId;
+      const userId = meta.arg.userId;
+      const method = meta.arg.method;
+
+      const item = Object.values(state.items).find((item) =>
+        item?.posts.find((post) => post.docId === docId)
+      );
+
+      if (item) {
+        const photo = item.posts.find((post) => post.docId === docId);
+        if (photo) {
+          photo.isLiked = !photo.isLiked;
+          if (method === 'add') photo.likes.push(userId);
+          else {
+            photo.likes = photo.likes.filter((id) => id !== userId);
+          }
         }
       }
     });
