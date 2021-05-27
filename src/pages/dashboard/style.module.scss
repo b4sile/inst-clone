@@ -1,0 +1,7 @@
+@import '../../variables.scss';
+
+.container {
+  @media (max-width: $md2+px) {
+    padding-bottom: 50px;
+  }
+}

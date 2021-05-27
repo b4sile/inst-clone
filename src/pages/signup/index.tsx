@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Button, InputText } from '../../components';
-import { ROUTES } from '../../constants/routes';
+import { ROUTES, VALUES } from '../../constants/routes';
 import { FirebaseContext } from '../../context/firebase';
 import { doesUsernameExist } from '../../services/firebase';
 import s from './style.module.scss';
@@ -64,7 +64,7 @@ const SignUp = () => {
       <div className={s.right}>
         <div className={s.top}>
           <h1 className={s.header}>
-            <img src="images/logo.png" alt="Logo" />
+            <img src={`${VALUES.LOGO}`} alt="Logo" />
           </h1>
           <p className={s.text}>
             Sign up to see photos and videos from your friends.{' '}

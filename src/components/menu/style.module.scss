@@ -11,7 +11,7 @@
   border-radius: 6px;
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.098) 0px 0px 5px 1px;
-  transition: all 0.2s ease;
+  transition: opacity 0.2s ease;
   z-index: 100;
 
   &::before,

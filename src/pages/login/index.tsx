@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Button, InputText } from '../../components';
-import { ROUTES } from '../../constants/routes';
+import { ROUTES, VALUES } from '../../constants/routes';
 import { FirebaseContext } from '../../context/firebase';
 import s from './style.module.scss';
 
@@ -37,13 +37,10 @@ const Login = () => {
 
   return (
     <div className={s.container}>
-      <div className={s.img}>
-        <img src="images/iphone-with-profile.jpg" alt="LoginImg" />
-      </div>
       <div className={s.right}>
         <div className={s.top}>
           <h1 className={s.header}>
-            <img src="images/logo.png" alt="Logo" />
+            <img src={`${VALUES.LOGO}`} alt="Logo" />
           </h1>
           {error && <p className={s.error}>{error}</p>}
           <form onSubmit={handleLogin}>

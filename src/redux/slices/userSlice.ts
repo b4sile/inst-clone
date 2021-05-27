@@ -7,6 +7,7 @@ export interface UserDataInterface {
   fullName: string;
   username: string;
   userId: string;
+  avatarUrl?: string;
   emailAddress: string;
   followers: string[];
   following: string[];

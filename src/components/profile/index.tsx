@@ -28,6 +28,7 @@ export const Profile = ({ className }: ProfileProps) => {
     followers,
     userId: profileUserId,
     docId: profileDocId,
+    avatarUrl,
   } = profileUser;
 
   const isOurAccount = profileUserId === userId;
@@ -39,7 +40,12 @@ export const Profile = ({ className }: ProfileProps) => {
     <div className={cn(s.container, className)}>
       <section className={s.top}>
         <div className={s.left}>
-          <Avatar size={150} />
+          <form>
+            <label className={s.avatar__label}>
+              <Avatar url={avatarUrl} size={150} />
+              <input className={s.avatar__input} type="file" />
+            </label>
+          </form>
         </div>
         <div className={s.right}>
           <div className={s.right__top}>

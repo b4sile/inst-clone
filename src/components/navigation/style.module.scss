@@ -22,14 +22,46 @@
 }
 
 .sublist {
-  width: 230px;
-  height: auto;
+  width: 230px !important;
+  height: auto !important;
   display: flex;
   flex-direction: column;
-  left: -120px;
+  left: -120px !important;
 
   &::after,
   &::before {
-    left: 90%;
+    left: 90% !important;
   }
+}
+
+.mobile__container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 44px;
+  background-color: #fff;
+  border-top: 1px solid $border;
+  width: 100%;
+}
+
+.mobile__list {
+  display: flex;
+  height: 100%;
+}
+
+.mobile__item {
+  flex: 1;
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.mobile__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }

@@ -2,11 +2,15 @@
 
 .header {
   position: relative;
-  z-index: 9999;
+  z-index: 2000;
 }
 
 .dummy {
   height: 54px;
+
+  @media (max-width: $md2+px) {
+    height: 44px;
+  }
 }
 
 .wrapper {
@@ -17,6 +21,10 @@
   left: 0;
   width: 100%;
   background-color: #fff;
+
+  @media (max-width: $md2+px) {
+    height: 44px;
+  }
 }
 
 .container {
@@ -33,10 +41,22 @@
 }
 
 .logo {
-  width: 103px;
-  height: 29px;
+  width: 70px;
+  height: 44px;
 
   &:active {
     opacity: 0.5;
+  }
+}
+
+.logo__link {
+}
+
+.btn {
+  background: none;
+
+  svg {
+    height: 24px;
+    width: 24px;
   }
 }

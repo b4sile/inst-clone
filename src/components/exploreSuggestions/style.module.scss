@@ -1,3 +1,4 @@
+@import '../../variables.scss';
 .wrapper {
   background-color: #fff;
   padding: 10px;
@@ -7,6 +8,9 @@
   padding-top: 60px;
   max-width: 600px;
   margin: 0 auto;
+  @media (max-width: $md2+px) {
+    padding-top: 10px;
+  }
 }
 
 .header {

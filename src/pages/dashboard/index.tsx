@@ -7,6 +7,7 @@ import { PostModal } from '../../components/post/PostModal';
 import { PostWrapper } from '../../components/post/PostWrapper';
 import { PrivateRoute } from '../../components/privateRoute';
 import { ROUTES } from '../../constants/routes';
+import s from './style.module.scss';
 
 const Dashboard = () => {
   const location = useLocation<any>();
@@ -20,7 +21,7 @@ const Dashboard = () => {
   return (
     <>
       <Header />
-      <main>
+      <main className={s.container}>
         <Switch location={background || location}>
           <PrivateRoute exact path={`${ROUTES.DASHBOARD}`}>
             <Home />
