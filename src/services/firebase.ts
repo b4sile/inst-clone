@@ -1,7 +1,8 @@
 import { CommentInterface } from './../redux/slices/timelineSlice';
-import { firebase, FieldValue } from '../context/firebase';
+import { firebase, FieldValue, storageRef } from '../context/firebase';
 import { UserDataInterface } from '../redux/slices/userSlice';
 import { PhotoInterface, PostInterface } from '../redux/slices/timelineSlice';
+import { parseAvatarUrl } from '../helpers/parseAvatarUrl';
 
 export const doesUsernameExist = async (username: string) => {
   const result = await firebase
@@ -10,6 +11,35 @@ export const doesUsernameExist = async (username: string) => {
     .where('username', '==', username)
     .get();
   return result.docs.find((user) => user.exists) ? true : false;
+};
+
+export const updateUserAvatar = async (docId: string, avatarUrl: string) => {
+  return firebase
+    .firestore()
+    .collection('users')
+    .doc(docId)
+    .update({ avatarUrl });
+};
+
+export const uploadPhoto = async (file: File, username: string) => {
+  const snapshot = await storageRef
+    .child(`${username}/${Date.now()}.${file.name.split('.').pop()}`)
+    .put(file);
+  const url = await storageRef
+    .child(`${snapshot.metadata.fullPath}`)
+    .getDownloadURL();
+  if (url) return url as string;
+  return null;
+};
+
+export const uploadPost = async (caption: string) => {
+  return firebase.firestore().collection('photos').add({ caption });
+};
+
+export const deletePhoto = async (prevUrl: string | null, username: string) => {
+  if (!prevUrl) return;
+  const url = parseAvatarUrl(prevUrl);
+  if (url) await storageRef.child(`${username}/${url}`).delete();
 };
 
 export const getUserById = async (

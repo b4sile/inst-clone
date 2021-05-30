@@ -2,6 +2,7 @@ import { createContext } from 'react';
 import Firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import 'firebase/storage';
 
 const config = {
   apiKey: 'AIzaSyCHSdDmDdqClqpU_Y9GogMQP-o-ukVZ-xA',
@@ -14,6 +15,7 @@ const config = {
 
 export const firebase = Firebase.initializeApp(config);
 export const { FieldValue } = Firebase.firestore;
+export const storageRef = Firebase.storage().ref();
 
 export class FirebaseAuthError implements Firebase.auth.Error {
   constructor(readonly code: string, readonly message: string) {}

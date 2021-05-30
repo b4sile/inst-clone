@@ -11,7 +11,11 @@ import {
   selectUserDocId,
   selectUserId,
 } from '../redux/slices/userSlice';
-import { fetchProfile, fetchUpdateFollowing } from '../redux/thunks';
+import {
+  fetchProfile,
+  fetchUpdateFollowing,
+  fetchUpdateUserAvatar,
+} from '../redux/thunks';
 
 export const useProfile = () => {
   const { username } = useParams<{ username: string }>();
@@ -26,6 +30,16 @@ export const useProfile = () => {
   const countProfilePosts = useAppSelector(
     selectCountProfilePosts(profileUser?.username)
   );
+
+  const onChangeAvatar = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const file = e.target.files && e.target.files[0];
+    const url = profileUser?.avatarUrl || null;
+    if (file && userDocId)
+      dispatch(
+        fetchUpdateUserAvatar({ docId: userDocId, username, file, url })
+      );
+  };
 
   const handleFollowUser = React.useCallback(
     async (
@@ -59,5 +73,6 @@ export const useProfile = () => {
     isUserFollowing,
     countProfilePosts,
     handleFollowUser,
+    onChangeAvatar,
   };
 };

@@ -8,6 +8,9 @@ import {
   getUserByUsername,
   getProfilePosts,
   getPostById,
+  updateUserAvatar,
+  uploadPhoto,
+  deletePhoto,
 } from './../../services/firebase';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getSuggestions, getUserById } from '../../services/firebase';
@@ -138,3 +141,23 @@ export const fetchProfile = createAsyncThunk<
   const posts = await getProfilePosts(user.userId, userId);
   return { user, posts };
 });
+
+type fetchUpdateUserAvatarParams = {
+  file: File;
+  username: string;
+  docId: string;
+  url: string | null;
+};
+
+export const fetchUpdateUserAvatar = createAsyncThunk(
+  'user/updateUserAvatar',
+  async ({ file, username, docId, url }: fetchUpdateUserAvatarParams) => {
+    const newUrl = await uploadPhoto(file, username);
+    if (newUrl)
+      await Promise.all([
+        updateUserAvatar(docId, newUrl),
+        deletePhoto(url, username),
+      ]);
+    return newUrl;
+  }
+);

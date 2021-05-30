@@ -7,7 +7,7 @@ import { CgAddR } from 'react-icons/cg';
 import { GrLogout } from 'react-icons/gr';
 import { AiOutlineLogin } from 'react-icons/ai';
 import { ROUTES } from '../../constants/routes';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Button } from '..';
 import { useAppSelector } from '../../hooks';
 import { selectUserUsername } from '../../redux/slices/userSlice';
@@ -17,12 +17,22 @@ export const MobileNav = () => {
   const { pathname } = useLocation();
   const username = useAppSelector(selectUserUsername);
   const { firebase } = React.useContext(FirebaseContext);
+  const fileRef = React.useRef<HTMLInputElement>(null);
+  const history = useHistory();
 
   const onSignOut = async () => {
     try {
       await firebase.auth().signOut();
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const file = e.target.files && e.target.files[0];
+    if (file) {
+      history.push({ pathname: `${ROUTES.CREATE}`, state: { file } });
     }
   };
 
@@ -43,13 +53,21 @@ export const MobileNav = () => {
               </Link>
             </li>
             <li className={s.mobile__item}>
-              <Button
-                variant="outlined"
-                color="secondary"
-                className={s.mobile__link}
-              >
-                <CgAddR />
-              </Button>
+              <label className={s.mobile__link}>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => fileRef.current?.click()}
+                >
+                  <CgAddR />
+                </Button>
+                <input
+                  ref={fileRef}
+                  type="file"
+                  className={s.input}
+                  onChange={onChangeFile}
+                />
+              </label>
             </li>
             <li className={s.mobile__item}>
               <Link

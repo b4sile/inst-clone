@@ -31,6 +31,7 @@ function App() {
                 `${ROUTES.PROFILE}`,
                 `${ROUTES.EXPLORE_SUGGESTIONS}`,
                 `${ROUTES.POST}`,
+                `${ROUTES.CREATE}`,
               ]}
             >
               {isLoading ? <Loading /> : <Dashboard />}

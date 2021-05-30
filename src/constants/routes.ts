@@ -6,6 +6,7 @@ export enum ROUTES {
   NOT_FOUND = '/not-found',
   POST = '/p/:id',
   EXPLORE_SUGGESTIONS = '/explore/suggestions',
+  CREATE = '/create',
 }
 
 export enum VALUES {

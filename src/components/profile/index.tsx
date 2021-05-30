@@ -16,6 +16,7 @@ export const Profile = ({ className }: ProfileProps) => {
     isUserFollowing,
     countProfilePosts,
     handleFollowUser,
+    onChangeAvatar,
   } = useProfile();
 
   if (isLoading && !profileUser) return <ProfileSkeleton />;
@@ -40,12 +41,16 @@ export const Profile = ({ className }: ProfileProps) => {
     <div className={cn(s.container, className)}>
       <section className={s.top}>
         <div className={s.left}>
-          <form>
-            <label className={s.avatar__label}>
-              <Avatar url={avatarUrl} size={150} />
-              <input className={s.avatar__input} type="file" />
-            </label>
-          </form>
+          <label className={s.avatar__label}>
+            <Avatar url={avatarUrl} size={150} />
+            {isOurAccount && (
+              <input
+                className={s.avatar__input}
+                type="file"
+                onChange={onChangeAvatar}
+              />
+            )}
+          </label>
         </div>
         <div className={s.right}>
           <div className={s.right__top}>

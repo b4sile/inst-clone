@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 type UserProps = {
   username: string;
+  avatarUrl?: string;
   variant?: 'big' | 'small' | 'middle';
   fullName?: string;
   tag?: string;
@@ -13,14 +14,21 @@ type UserProps = {
 };
 
 export const User = React.memo(
-  ({ username, fullName, tag, className, variant = 'small' }: UserProps) => {
+  ({
+    username,
+    fullName,
+    tag,
+    avatarUrl,
+    className,
+    variant = 'small',
+  }: UserProps) => {
     const avatarSize =
       variant === 'small' ? 32 : variant === 'middle' ? 44 : 56;
 
     return (
       <div className={cn(s.container, className)}>
         <Link to={`/${username}`} className={s.username}>
-          <Avatar url={`images/avatars/${username}.jpg`} size={avatarSize} />
+          <Avatar url={avatarUrl} size={avatarSize} />
         </Link>
         <div className={s.middle}>
           <Link to={`/${username}`} className={cn(s.username, s.link)}>

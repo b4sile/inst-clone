@@ -1,0 +1,22 @@
+@import '../../variables.scss';
+.container {
+  composes: container from '../commentInput/style.module.scss';
+  border: 1px solid $border;
+  margin-top: 15px;
+  padding-right: 75px;
+}
+
+.textarea {
+  composes: textarea from '../commentInput/style.module.scss';
+  background-color: $bg;
+}
+
+.btn {
+  composes: btn from '../commentInput/style.module.scss';
+  background-color: $bg;
+}
+
+.title {
+  text-align: center;
+  margin: 7px 0;
+}

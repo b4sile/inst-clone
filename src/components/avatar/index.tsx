@@ -5,7 +5,7 @@ import Skeleton from 'react-loading-skeleton';
 import { VALUES } from '../../constants/routes';
 
 type AvatarProps = {
-  url?: string | undefined;
+  url?: string;
   size?: number;
   className?: string;
 };

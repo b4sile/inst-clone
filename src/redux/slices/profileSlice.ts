@@ -5,6 +5,7 @@ import {
   fetchUpdateFollowing,
   fetchUpdatePostComments,
   fetchUpdatePostLikes,
+  fetchUpdateUserAvatar,
 } from '../thunks';
 import { PhotoInterface } from './timelineSlice';
 import { UserDataInterface } from './userSlice';
@@ -108,6 +109,16 @@ const { actions, reducer } = createSlice({
         }
       }
     });
+    builder.addCase(
+      fetchUpdateUserAvatar.fulfilled,
+      (state, { payload, meta }) => {
+        const docId = meta.arg.docId;
+        const item = Object.values(state.items).find(
+          (item) => item?.user.docId === docId
+        );
+        if (item) item.user.avatarUrl = payload || undefined;
+      }
+    );
   },
 });
 

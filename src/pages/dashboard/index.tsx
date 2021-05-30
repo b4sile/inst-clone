@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import { Header, Profile } from '../../components';
+import { Create } from '../../components/create';
 import { ExploreSuggestions } from '../../components/exploreSuggestions';
 import { Home } from '../../components/home';
 import { PostModal } from '../../components/post/PostModal';
@@ -28,6 +29,9 @@ const Dashboard = () => {
           </PrivateRoute>
           <PrivateRoute exact path={`${ROUTES.EXPLORE_SUGGESTIONS}`}>
             <ExploreSuggestions />
+          </PrivateRoute>
+          <PrivateRoute exact path={`${ROUTES.CREATE}`}>
+            <Create />
           </PrivateRoute>
           <Route exact path={`${ROUTES.PROFILE}`}>
             <Profile />

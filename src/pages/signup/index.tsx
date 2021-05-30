@@ -42,6 +42,7 @@ const SignUp = () => {
         following: [],
         followers: [],
         dateCreated: Date.now(),
+        avatarUrl: null,
       });
       setIsSignUping(false);
       history.push(ROUTES.DASHBOARD);

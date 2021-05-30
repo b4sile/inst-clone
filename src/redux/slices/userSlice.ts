@@ -1,17 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '..';
-import { fetchUpdateFollowing, fetchUserById } from '../thunks';
+import {
+  fetchUpdateFollowing,
+  fetchUpdateUserAvatar,
+  fetchUserById,
+} from '../thunks';
 
 export interface UserDataInterface {
   docId: string;
   fullName: string;
   username: string;
   userId: string;
-  avatarUrl?: string;
   emailAddress: string;
   followers: string[];
   following: string[];
   dateCreated: number;
+  avatarUrl?: string;
 }
 interface UserState {
   user: UserDataInterface | null;
@@ -72,11 +76,16 @@ const { actions, reducer } = createSlice({
       );
       console.log(error);
     });
+    builder.addCase(fetchUpdateUserAvatar.fulfilled, (state, { payload }) => {
+      if (state.user) state.user.avatarUrl = payload || undefined;
+    });
   },
 });
 
 export const selectUserUsername = ({ user: { user } }: RootState) =>
   user && user.username;
+export const selectUserAvatar = ({ user: { user } }: RootState) =>
+  user && user.avatarUrl;
 export const selectUserFullName = ({ user: { user } }: RootState) =>
   user && user.fullName;
 export const selectUserFollowing = ({ user: { user } }: RootState) =>
