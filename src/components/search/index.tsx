@@ -4,8 +4,9 @@ import { BiSearchAlt2 } from 'react-icons/bi';
 import { Menu } from '../menu';
 import { GrClose } from 'react-icons/gr';
 import { useMediaQuery } from 'react-responsive';
-import { Button } from '..';
+import { Button, User } from '..';
 import cn from 'classnames';
+import { useSearch } from '../../hooks/useSearch';
 
 export const Search = () => {
   const isSmallScreen = useMediaQuery({
@@ -15,9 +16,11 @@ export const Search = () => {
     React.useState<HTMLInputElement | null>(null);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [isOpenMenu, setIsOpenMenu] = React.useState(false);
+  const { value, setValue, users, setUsers } = useSearch();
 
   const onFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     setAnchorElem(e.currentTarget);
+    document.body.style.overflow = 'hidden';
   };
 
   const onOpenMenu = () => {
@@ -31,6 +34,9 @@ export const Search = () => {
   const onClose = () => {
     setAnchorElem(null);
     setIsOpenMenu(false);
+    setValue('');
+    setUsers([]);
+    document.body.style.overflow = 'unset';
   };
 
   return (
@@ -42,6 +48,8 @@ export const Search = () => {
           type="text"
           placeholder="Search"
           onFocus={onFocus}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
         />
       ) : (
         <Button
@@ -62,9 +70,16 @@ export const Search = () => {
         visible={Boolean(anchorElem)}
         onClose={onClose}
         isInputMenu
-        className={cn({ [s.mobile__menu]: isSmallScreen })}
+        className={cn(s.menu, { [s.mobile__menu]: isSmallScreen })}
       >
-        <button>click</button>
+        {users.map(({ username, fullName, avatarUrl }) => (
+          <User
+            key={username}
+            username={username}
+            fullName={fullName}
+            avatarUrl={avatarUrl}
+          />
+        ))}
       </Menu>
     </div>
   );

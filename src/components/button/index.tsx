@@ -23,13 +23,17 @@ export const Button = ({
 }: ButtonProps) => {
   return (
     <button
-      className={cn(s.button, className, {
-        [s.fullWidth]: fullWidth,
-        [s.button_contained]: variant === 'contained',
-        [s.button_outlined]: variant === 'outlined',
-        [s.secondary]: color === 'secondary',
-        [s.button_disabled]: disabled,
-      })}
+      className={cn(
+        s.button,
+        {
+          [s.fullWidth]: fullWidth,
+          [s.button_contained]: variant === 'contained',
+          [s.button_outlined]: variant === 'outlined',
+          [s.secondary]: color === 'secondary',
+          [s.button_disabled]: disabled,
+        },
+        className
+      )}
       {...restProps}
     >
       <span className={cn({ [s.isLoading]: isLoading })}>{children}</span>

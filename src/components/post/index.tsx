@@ -3,12 +3,13 @@ import s from './style.module.scss';
 import cn from 'classnames';
 import { PostInterface } from '../../redux/slices/timelineSlice';
 import { Image } from '../image';
-import { User } from '..';
 import { Paper } from '../paper';
 import { Controls } from '../controls';
 import { Comment } from '../comment';
 import { CommentInput } from '../commentInput';
 import { Link } from 'react-router-dom';
+import { User } from '..';
+import { ModalButton } from '../modalButton';
 
 interface PostProps extends PostInterface {
   className?: string;
@@ -28,7 +29,6 @@ export const Post = React.memo(
     dateCreated,
     likes,
     isFullPost,
-    photoId,
     isModalPost,
   }: PostProps) => {
     return (
@@ -51,6 +51,11 @@ export const Post = React.memo(
           {!isFullPost && (
             <header className={s.header}>
               <User username={user.username} />
+              <ModalButton
+                imageSrc={imageSrc}
+                docId={docId}
+                username={user.username}
+              />
             </header>
           )}
           {isFullPost ? (
@@ -62,7 +67,7 @@ export const Post = React.memo(
               <Image src={imageSrc} />
             </div>
           ) : (
-            <Link to={`/p/${photoId}`}>
+            <Link to={`/p/${docId}`}>
               <Image src={imageSrc} className={cn(s.img__fullpost)} />
             </Link>
           )}
@@ -72,6 +77,11 @@ export const Post = React.memo(
                 className={cn(s.header, { [s.header__fullpost]: isFullPost })}
               >
                 <User username={user.username} />
+                <ModalButton
+                  imageSrc={imageSrc}
+                  username={user.username}
+                  docId={docId}
+                />
               </header>
             )}
             <div className={cn(s.middle, { [s.middle__fullpost]: isFullPost })}>
@@ -105,7 +115,7 @@ export const Post = React.memo(
                     ))}
                   {!isFullPost && comments.length > 2 && (
                     <li>
-                      <Link to={`/p/${photoId}`} className={s.comments__link}>
+                      <Link to={`/p/${docId}`} className={s.comments__link}>
                         See all {comments.length} comments.
                       </Link>
                     </li>

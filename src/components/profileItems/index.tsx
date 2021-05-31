@@ -12,14 +12,14 @@ export const ProfileItems = ({ username, className }: ProfileItemsProps) => {
   return (
     <div className={cn(s.container, className)}>
       {posts &&
-        posts.map(({ imageSrc, comments, likes, photoId }) => (
+        posts.map(({ imageSrc, comments, likes, docId }) => (
           <ProfileItem
             className={s.item}
             key={imageSrc}
             countLikes={likes.length}
             countComments={comments.length}
             url={imageSrc}
-            photoId={photoId}
+            docId={docId}
           />
         ))}
     </div>

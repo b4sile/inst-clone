@@ -11,6 +11,9 @@ import {
   updateUserAvatar,
   uploadPhoto,
   deletePhoto,
+  uploadPost,
+  deletePost,
+  searchUsers,
 } from './../../services/firebase';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getSuggestions, getUserById } from '../../services/firebase';
@@ -33,8 +36,8 @@ export const fetchPostById = createAsyncThunk<
   { post: PhotoInterface; user: UserDataInterface } | null,
   string,
   { state: RootState }
->('post/fetchById', async (photoId, { getState }) => {
-  const post = await getPostById(photoId);
+>('post/fetchById', async (docId, { getState }) => {
+  const post = await getPostById(docId);
   if (!post) return null;
   const userId = getState().user.user?.userId;
   post.isLiked = (userId && post.likes.includes(userId)) || false;
@@ -159,5 +162,40 @@ export const fetchUpdateUserAvatar = createAsyncThunk(
         deletePhoto(url, username),
       ]);
     return newUrl;
+  }
+);
+
+type fetchAddUserPostParams = {
+  postData: Omit<PhotoInterface, 'isLiked' | 'docId' | 'imageSrc'>;
+  file: File;
+  username: string;
+};
+
+export const fetchAddUserPost = createAsyncThunk(
+  'post/addUserPost',
+  async ({ postData, file, username }: fetchAddUserPostParams) => {
+    const postPhotoUrl = await uploadPhoto(file, username);
+    const newPostId = await uploadPost({ ...postData, imageSrc: postPhotoUrl });
+    return newPostId;
+  }
+);
+
+type fetchDeleteUserPostParams = {
+  username: string;
+  docId: string;
+  url: string;
+};
+
+export const fetchDeleteUserPost = createAsyncThunk(
+  'post/deleteUserPost',
+  async ({ username, url, docId }: fetchDeleteUserPostParams) => {
+    await Promise.all([deletePhoto(url, username), deletePost(docId)]);
+  }
+);
+
+export const fetchSearchUsers = createAsyncThunk(
+  'user/searchUsers',
+  async (value: string) => {
+    return await searchUsers(value);
   }
 );

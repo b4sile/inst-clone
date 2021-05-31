@@ -11,7 +11,7 @@ type ProfileItemProps = {
   countLikes: number;
   countComments: number;
   url: string;
-  photoId: number;
+  docId: string;
   className?: string;
 };
 
@@ -19,7 +19,7 @@ export const ProfileItem = ({
   countLikes,
   countComments,
   url,
-  photoId,
+  docId,
   className,
 }: ProfileItemProps) => {
   const location = useLocation();
@@ -31,7 +31,7 @@ export const ProfileItem = ({
     <div className={cn(className)}>
       <Link
         to={{
-          pathname: `/p/${photoId}`,
+          pathname: `/p/${docId}`,
           state: { background: !isSmallScreen ? location : undefined },
         }}
       >

@@ -1,0 +1,13 @@
+@import '../../variables.scss';
+.btn {
+  height: 48px;
+  background: none !important;
+  border-bottom: 1px solid $border;
+  &.delete {
+    color: $red;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}

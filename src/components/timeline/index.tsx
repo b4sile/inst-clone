@@ -17,7 +17,7 @@ export const Timeline = React.memo(({ className }: TimeLineProps) => {
         Array.from({ length: 3 }, (_, ind) => <PostSkeleton key={ind} />)
       ) : posts.length ? (
         posts.map((post) => (
-          <Post className={s.item} key={post.photoId} {...post} />
+          <Post className={s.item} key={post.docId} {...post} />
         ))
       ) : (
         <p>Follow people to see photos.</p>

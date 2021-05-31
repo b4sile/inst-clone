@@ -16,6 +16,7 @@ export const Create = () => {
     isLoading,
     handleAddPost,
     onKeyDown,
+    isSmallScreen,
   } = useUploadPhoto();
 
   if (!state) return <Redirect to="/" />;
@@ -23,7 +24,11 @@ export const Create = () => {
   return (
     <div>
       <h1 className={s.title}>New Post</h1>
-      {preview && <Image src={preview} alt="Preview" className={s.img} />}
+      {preview && (
+        <div className={cn({ [s.bigscreen]: !isSmallScreen })}>
+          <Image src={preview} alt="Preview" />
+        </div>
+      )}
       <div className={cn(s.container)}>
         <form onSubmit={handleAddPost}>
           <TextareaAutosize

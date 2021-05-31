@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '..';
 import {
+  fetchDeleteUserPost,
   fetchPostById,
   fetchUpdatePostComments,
   fetchUpdatePostLikes,
@@ -31,7 +32,7 @@ const { reducer } = createSlice({
     });
     builder.addCase(fetchPostById.fulfilled, (state, { payload }) => {
       if (payload)
-        state.items[payload.post.photoId] = {
+        state.items[payload.post.docId] = {
           ...payload.post,
           user: payload.user,
         };
@@ -66,6 +67,10 @@ const { reducer } = createSlice({
       if (photo) {
         photo.comments.push(comment);
       }
+    });
+    builder.addCase(fetchDeleteUserPost.fulfilled, (state, { meta }) => {
+      const docId = meta.arg.docId;
+      delete state.items[docId];
     });
   },
 });

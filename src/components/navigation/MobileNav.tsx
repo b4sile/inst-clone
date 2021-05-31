@@ -33,6 +33,7 @@ export const MobileNav = () => {
     const file = e.target.files && e.target.files[0];
     if (file) {
       history.push({ pathname: `${ROUTES.CREATE}`, state: { file } });
+      e.target.value = '';
     }
   };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { AiFillHome, AiOutlineHome } from 'react-icons/ai';
 import { FaRegUserCircle, FaUserCircle } from 'react-icons/fa';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Button } from '..';
 import { ROUTES } from '../../constants/routes';
 import { FirebaseContext } from '../../context/firebase';
@@ -16,6 +16,8 @@ export const Navigation = () => {
   const { pathname } = useLocation();
   const { firebase } = React.useContext(FirebaseContext);
   const username = useAppSelector(selectUserUsername);
+  const fileRef = React.useRef<HTMLInputElement>(null);
+  const history = useHistory();
 
   const onSignOut = async () => {
     try {
@@ -23,6 +25,16 @@ export const Navigation = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const file = e.target.files && e.target.files[0];
+    if (file) {
+      history.push({ pathname: `${ROUTES.CREATE}`, state: { file } });
+      e.target.value = '';
+    }
+    onClose();
   };
 
   const handleOpenUserMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -89,6 +101,24 @@ export const Navigation = () => {
                     >
                       Sign Out
                     </Button>
+                  </li>
+                  <li>
+                    <label>
+                      <Button
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => fileRef.current?.click()}
+                        fullWidth
+                      >
+                        Add post
+                      </Button>
+                      <input
+                        ref={fileRef}
+                        type="file"
+                        className={s.input}
+                        onChange={onChangeFile}
+                      />
+                    </label>
                   </li>
                 </ul>
               </Menu>

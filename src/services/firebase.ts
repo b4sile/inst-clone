@@ -13,6 +13,20 @@ export const doesUsernameExist = async (username: string) => {
   return result.docs.find((user) => user.exists) ? true : false;
 };
 
+export const searchUsers = async (value: string) => {
+  const result = await firebase
+    .firestore()
+    .collection('users')
+    .orderBy('username')
+    .startAt(value)
+    .endAt(`${value}\uf8ff`)
+    .get();
+  return result.docs.map((doc) => ({
+    ...doc.data(),
+    docId: doc.id,
+  })) as UserDataInterface[];
+};
+
 export const updateUserAvatar = async (docId: string, avatarUrl: string) => {
   return firebase
     .firestore()
@@ -28,12 +42,18 @@ export const uploadPhoto = async (file: File, username: string) => {
   const url = await storageRef
     .child(`${snapshot.metadata.fullPath}`)
     .getDownloadURL();
-  if (url) return url as string;
-  return null;
+  return url as string;
 };
 
-export const uploadPost = async (caption: string) => {
-  return firebase.firestore().collection('photos').add({ caption });
+export const uploadPost = async (
+  postData: Omit<PhotoInterface, 'isLiked' | 'docId'>
+) => {
+  const newPost = await firebase.firestore().collection('photos').add(postData);
+  return newPost.id;
+};
+
+export const deletePost = async (docId: string) => {
+  return firebase.firestore().collection('photos').doc(docId).delete();
 };
 
 export const deletePhoto = async (prevUrl: string | null, username: string) => {
@@ -73,19 +93,11 @@ export const getUserByUsername = async (
 };
 
 export const getPostById = async (
-  photoId: string
+  docId: string
 ): Promise<PhotoInterface | null> => {
-  const post = await firebase
-    .firestore()
-    .collection('photos')
-    .where('photoId', '==', +photoId)
-    .get();
-  return post.docs.length > 0
-    ? (post.docs.reduce(
-        (obj, doc) => (obj = { ...doc.data(), docId: doc.id }),
-        {}
-      ) as PhotoInterface)
-    : null;
+  const post = await firebase.firestore().collection('photos').doc(docId).get();
+  if (post.exists) return { ...post.data(), docId: post.id } as PhotoInterface;
+  return null;
 };
 
 export const getSuggestions = async (
@@ -200,6 +212,7 @@ export const getProfilePosts = async (
     .firestore()
     .collection('photos')
     .where('userId', '==', profileUserId)
+    .orderBy('dateCreated', 'desc')
     .get();
 
   return posts.docs.map((doc) => ({

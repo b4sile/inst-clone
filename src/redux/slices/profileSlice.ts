@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '..';
 import {
+  fetchDeleteUserPost,
   fetchProfile,
   fetchUpdateFollowing,
   fetchUpdatePostComments,
@@ -119,6 +120,14 @@ const { actions, reducer } = createSlice({
         if (item) item.user.avatarUrl = payload || undefined;
       }
     );
+    builder.addCase(fetchDeleteUserPost.fulfilled, (state, { meta }) => {
+      const docId = meta.arg.docId;
+      const username = meta.arg.username;
+      const item = Object.values(state.items).find(
+        (item) => item?.user.username === username
+      );
+      if (item) item.posts = item.posts.filter((post) => post.docId !== docId);
+    });
   },
 });
 

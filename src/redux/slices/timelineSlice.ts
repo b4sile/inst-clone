@@ -18,10 +18,7 @@ export interface PhotoInterface {
   dateCreated: number;
   imageSrc: string;
   likes: string[];
-  photoId: number;
   userId: string;
-  userLatitude: string;
-  userLongitude: string;
   docId: string;
   isLiked: boolean;
 }
