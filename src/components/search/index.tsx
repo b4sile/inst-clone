@@ -78,6 +78,7 @@ export const Search = () => {
             username={username}
             fullName={fullName}
             avatarUrl={avatarUrl}
+            onClick={onClose}
           />
         ))}
       </Menu>

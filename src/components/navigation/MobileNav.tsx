@@ -9,7 +9,7 @@ import { AiOutlineLogin } from 'react-icons/ai';
 import { ROUTES } from '../../constants/routes';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Button } from '..';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { selectUserUsername } from '../../redux/slices/userSlice';
 import { FirebaseContext } from '../../context/firebase';
 
@@ -19,10 +19,13 @@ export const MobileNav = () => {
   const { firebase } = React.useContext(FirebaseContext);
   const fileRef = React.useRef<HTMLInputElement>(null);
   const history = useHistory();
+  const dispatch = useAppDispatch();
 
   const onSignOut = async () => {
     try {
       await firebase.auth().signOut();
+      dispatch({ type: 'user/logout' });
+      history.push(ROUTES.LOGIN);
     } catch (err) {
       console.log(err);
     }
@@ -67,6 +70,7 @@ export const MobileNav = () => {
                   type="file"
                   className={s.input}
                   onChange={onChangeFile}
+                  accept="image/*"
                 />
               </label>
             </li>

@@ -14,7 +14,7 @@ export const useSearch = () => {
       const response = await dispatch(fetchSearchUsers(value));
       if (response.meta.requestStatus === 'fulfilled')
         setUsers(response.payload as UserDataInterface[]);
-    }, 1000);
+    }, 700);
 
     return () => {
       clearTimeout(timer);

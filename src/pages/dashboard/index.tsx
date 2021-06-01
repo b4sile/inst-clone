@@ -9,14 +9,15 @@ import { PostWrapper } from '../../components/post/PostWrapper';
 import { PrivateRoute } from '../../components/privateRoute';
 import { ROUTES } from '../../constants/routes';
 import s from './style.module.scss';
+import { Location } from 'history';
 
 const Dashboard = () => {
-  const location = useLocation<any>();
+  const location = useLocation<{ background: Location<unknown> | null }>();
 
   const background = location.state?.background;
 
   React.useEffect(() => {
-    document.title = 'Instagram';
+    document.title = 'MyPhotos';
   }, []);
 
   return (

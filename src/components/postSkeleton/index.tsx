@@ -4,9 +4,12 @@ import { useMediaQuery } from 'react-responsive';
 import { Paper } from '../paper';
 import { UserSkeleton } from '../userSkeleton';
 
-type PostSkeletonProps = { isFullPost?: boolean };
+type PostSkeletonProps = { isFullPost?: boolean; isModalPost?: boolean };
 
-export const PostSkeleton = ({ isFullPost }: PostSkeletonProps) => {
+export const PostSkeleton = ({
+  isFullPost,
+  isModalPost,
+}: PostSkeletonProps) => {
   const isSmallScreen = useMediaQuery({
     query: '(max-width: 768px)',
   });
@@ -16,7 +19,7 @@ export const PostSkeleton = ({ isFullPost }: PostSkeletonProps) => {
       style={{
         display: 'flex',
         flexDirection: isFullPost && !isSmallScreen ? 'row' : 'column',
-        marginTop: '40px',
+        marginTop: !isModalPost ? '40px' : '0px',
       }}
     >
       <div style={{ padding: '16px' }}>

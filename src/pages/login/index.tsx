@@ -58,6 +58,7 @@ const Login = () => {
               value={password}
               className={s.input}
               type="password"
+              autoComplete="off"
             />
             <Button
               type="submit"

@@ -1,6 +1,8 @@
+@import '../../variables.scss';
 .container {
   position: relative;
   overflow: hidden;
+  background-color: #fff;
 
   img {
     position: absolute;

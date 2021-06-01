@@ -1,8 +1,8 @@
 import React from 'react';
 
-type SpinnerProps = { className?: string; variant?: 'contained' | 'outlined' };
+type SpinnerProps = { className?: string };
 
-export const Spinner = ({ className, variant = 'contained' }: SpinnerProps) => {
+export const Spinner = ({ className }: SpinnerProps) => {
   return (
     <>
       <svg
@@ -15,13 +15,7 @@ export const Spinner = ({ className, variant = 'contained' }: SpinnerProps) => {
         viewBox="0 0 128 128"
         xmlSpace="preserve"
       >
-        <rect
-          x="0"
-          y="0"
-          width="100%"
-          height="100%"
-          fill={`${variant === 'contained' ? '#afdafb' : '#fafafa'}`}
-        />
+        <rect x="0" y="0" width="100%" height="100%" fill="none" />
         <g>
           <path d="M59.6 0h8v40h-8V0z" fill="#000000" />
           <path

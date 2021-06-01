@@ -32,7 +32,7 @@ export const ProfileItem = ({
       <Link
         to={{
           pathname: `/p/${docId}`,
-          state: { background: !isSmallScreen ? location : undefined },
+          state: { background: !isSmallScreen ? location : null },
         }}
       >
         <Image src={url} isProfileImage />

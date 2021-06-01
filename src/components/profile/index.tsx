@@ -48,6 +48,7 @@ export const Profile = ({ className }: ProfileProps) => {
                 className={s.avatar__input}
                 type="file"
                 onChange={onChangeAvatar}
+                accept="image/*"
               />
             )}
           </label>

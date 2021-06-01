@@ -17,6 +17,7 @@ type SuggestionProps = {
     profileId: string,
     method: 'add' | 'remove'
   ) => void;
+  avatarUrl?: string;
   fullName?: string;
   variant?: 'small' | 'middle';
   className?: string;
@@ -30,6 +31,7 @@ export const Suggestion = React.memo(
     handleFollowUser,
     variant,
     fullName,
+    avatarUrl,
     className,
   }: SuggestionProps) => {
     const isFollow = useAppSelector(selectIsUserFollowed(profileId));
@@ -42,6 +44,7 @@ export const Suggestion = React.memo(
           variant={variant}
           {...(variant === 'middle' ? { fullName } : {})}
           tag="popular"
+          avatarUrl={avatarUrl}
         />
         <Button
           onClick={() =>

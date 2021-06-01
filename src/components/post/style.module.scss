@@ -55,10 +55,18 @@
 .img__fullpost {
   flex: 0 1 100%;
   border-right: 1px solid $border;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img__wrapper {
+  flex: 1;
 }
 
 .img__modalpost {
   border-right: 0px !important;
+  background-color: #000;
 }
 
 .fullpost__right {

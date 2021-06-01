@@ -20,17 +20,20 @@ export const Suggestions = ({
   return (
     <section className={cn(className)}>
       {suggestions.length || !isLoading
-        ? suggestions.map(({ userId, username, docId, fullName }) => (
-            <Suggestion
-              key={userId}
-              username={username}
-              profileId={userId}
-              profileDocId={docId}
-              handleFollowUser={handleFollowUser}
-              variant={variant}
-              fullName={fullName}
-            />
-          ))
+        ? suggestions.map(
+            ({ userId, username, docId, fullName, avatarUrl }) => (
+              <Suggestion
+                key={userId}
+                username={username}
+                profileId={userId}
+                profileDocId={docId}
+                handleFollowUser={handleFollowUser}
+                variant={variant}
+                fullName={fullName}
+                avatarUrl={avatarUrl}
+              />
+            )
+          )
         : Array.from({ length: count }, (_, ind) => <UserSkeleton key={ind} />)}
     </section>
   );

@@ -5,7 +5,7 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Button } from '..';
 import { ROUTES } from '../../constants/routes';
 import { FirebaseContext } from '../../context/firebase';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { selectUserUsername } from '../../redux/slices/userSlice';
 import { Menu } from '../menu';
 import s from './style.module.scss';
@@ -18,10 +18,13 @@ export const Navigation = () => {
   const username = useAppSelector(selectUserUsername);
   const fileRef = React.useRef<HTMLInputElement>(null);
   const history = useHistory();
+  const dispatch = useAppDispatch();
 
   const onSignOut = async () => {
     try {
       await firebase.auth().signOut();
+      dispatch({ type: 'user/logout' });
+      history.push(ROUTES.LOGIN);
     } catch (err) {
       console.log(err);
     }
@@ -117,6 +120,7 @@ export const Navigation = () => {
                         type="file"
                         className={s.input}
                         onChange={onChangeFile}
+                        accept="image/*"
                       />
                     </label>
                   </li>

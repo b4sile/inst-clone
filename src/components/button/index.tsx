@@ -37,7 +37,7 @@ export const Button = ({
       {...restProps}
     >
       <span className={cn({ [s.isLoading]: isLoading })}>{children}</span>
-      {isLoading && <Spinner className={s.spinner} variant="outlined" />}
+      {isLoading && <Spinner className={s.spinner} />}
     </button>
   );
 };

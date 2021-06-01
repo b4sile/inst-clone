@@ -50,7 +50,7 @@ export const Post = React.memo(
         >
           {!isFullPost && (
             <header className={s.header}>
-              <User username={user.username} />
+              <User username={user.username} avatarUrl={user.avatarUrl} />
               <ModalButton
                 imageSrc={imageSrc}
                 docId={docId}
@@ -64,7 +64,9 @@ export const Post = React.memo(
                 [s.img__modalpost]: isModalPost,
               })}
             >
-              <Image src={imageSrc} />
+              <div className={s.img__wrapper}>
+                <Image src={imageSrc} />
+              </div>
             </div>
           ) : (
             <Link to={`/p/${docId}`}>
@@ -76,7 +78,7 @@ export const Post = React.memo(
               <header
                 className={cn(s.header, { [s.header__fullpost]: isFullPost })}
               >
-                <User username={user.username} />
+                <User username={user.username} avatarUrl={user.avatarUrl} />
                 <ModalButton
                   imageSrc={imageSrc}
                   username={user.username}
