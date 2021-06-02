@@ -11,7 +11,7 @@ export const useSearch = () => {
   React.useEffect(() => {
     if (value === '') return;
     const timer = setTimeout(async () => {
-      const response = await dispatch(fetchSearchUsers(value));
+      const response = await dispatch(fetchSearchUsers(value.toLowerCase()));
       if (response.meta.requestStatus === 'fulfilled')
         setUsers(response.payload as UserDataInterface[]);
     }, 700);
